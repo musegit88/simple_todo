@@ -1,10 +1,9 @@
 import { redirect } from "next/navigation";
-
-import { getSearchedTask } from "@/app/_actions/tasks.action";
+import { auth } from "@/auth";
 import MyTasks from "@/components/my-tasks";
 import { ListType, UserProps } from "@/types";
-import { auth } from "../../../auth";
 import { allLists } from "@/app/_actions/list.actions";
+import { getSearchedTask } from "@/app/_actions/tasks.action";
 
 const SearchPage = async ({
   searchParams,
@@ -13,6 +12,9 @@ const SearchPage = async ({
 }) => {
   const session = await auth();
   const user = session?.user as UserProps;
+
+  if (!user) redirect("/sigin");
+
   const lists = (await allLists(user.id!)) as ListType[];
 
   if (!searchParams.query) {

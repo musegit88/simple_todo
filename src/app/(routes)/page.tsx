@@ -1,13 +1,18 @@
-import { getCompletedTasks, getTasks } from "../_actions/tasks.action";
+import { redirect } from "next/navigation";
+import { auth } from "@/auth";
+
 import CompletedTasks from "@/components/completed-task";
 import MyTasks from "@/components/my-tasks";
 import { ListType, UserProps } from "@/types";
-import { auth } from "@/auth";
+import { getCompletedTasks, getTasks } from "../_actions/tasks.action";
 import { allLists } from "../_actions/list.actions";
 
 const HomePage = async () => {
   const session = await auth();
   const user = session?.user as UserProps;
+
+  if (!user) redirect("/sigin");
+
   const tasks = await getTasks(user?.id);
   const lists = (await allLists(user.id!)) as ListType[];
   const completedTasks = await getCompletedTasks(user?.id);
