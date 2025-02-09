@@ -14,6 +14,7 @@ import IconPicker from "@/components/icon-picker";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { UpdateListFromProps } from "@/types";
+import ColorPicker from "../color-picker";
 
 const UpdateListForm = ({ list }: UpdateListFromProps) => {
   const router = useRouter();
@@ -23,6 +24,7 @@ const UpdateListForm = ({ list }: UpdateListFromProps) => {
     defaultValues: {
       listName: list.name,
       listIcon: list.icon,
+      listColor: list.color,
       listId: list.id,
       userId: list.userId,
     },
@@ -81,10 +83,28 @@ const UpdateListForm = ({ list }: UpdateListFromProps) => {
               )}
             />
           </div>
-          <div className="flex justify-end">
-            <Button type="submit" disabled={!form.formState.isDirty}>
-              Update
-            </Button>
+          <div className="flex justify-between">
+            <div className="flex gap-1">
+              <FormField
+                control={form.control}
+                name="listColor"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <ColorPicker
+                        color={field.value!}
+                        setColor={field.onChange}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="flex justify-end">
+              <Button type="submit" disabled={!form.formState.isDirty}>
+                Update
+              </Button>
+            </div>
           </div>
         </form>
       </Form>

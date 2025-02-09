@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 
+import { cn } from "@/lib/utils";
 import {
   Dialog,
   DialogContent,
@@ -22,8 +23,16 @@ const UpdateList = ({ list }: UpdateListProps) => {
   return (
     <div className="flex justify-end gap-2 cursor-pointer">
       <Dialog>
-        <DialogTrigger asChild>
-          <Edit size={14} className="text-emerald-400" />
+        <DialogTrigger
+          asChild
+          className={cn("p-1", list.color && "bg-gray-400 rounded-md")}
+        >
+          <Edit
+            className={cn(
+              "w-6 h-6 sm:w-7 sm:h-7",
+              list.color ? "text-emerald-800" : "text-emerald-400"
+            )}
+          />
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>

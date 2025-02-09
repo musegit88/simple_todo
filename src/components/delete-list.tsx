@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Trash2 } from "lucide-react";
 
+import { cn } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,7 +19,7 @@ import {
 import { deleteList } from "@/app/_actions/list.actions";
 import { DeleteListProps } from "@/types";
 
-const DeleteList = ({ listId, listName }: DeleteListProps) => {
+const DeleteList = ({ listId, listName, listColor }: DeleteListProps) => {
   const router = useRouter();
 
   const handleDeleteList = async () => {
@@ -34,10 +35,16 @@ const DeleteList = ({ listId, listName }: DeleteListProps) => {
   return (
     <>
       <AlertDialog>
-        <AlertDialogTrigger>
-          <div className="cursor-pointer text-red-500" title="Delete list">
-            <Trash2 size={14} />
-          </div>
+        <AlertDialogTrigger
+          className={cn("p-1", listColor && "bg-gray-400 rounded-md")}
+          title="Delete list"
+        >
+          <Trash2
+            className={cn(
+              "w-4 h-4 sm:w-5 sm:h-5",
+              listColor ? "text-red-900" : "text-red-500"
+            )}
+          />
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

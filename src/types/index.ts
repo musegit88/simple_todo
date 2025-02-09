@@ -41,6 +41,7 @@ export type DatePickerProps = {
 export type DeleteListProps = {
   listId: string;
   listName: string;
+  listColor: string | undefined;
 };
 
 export type DeleteTaskProps = {
@@ -81,6 +82,7 @@ export type ListType = {
   id: string;
   name: string;
   icon: string | undefined;
+  color: string | undefined;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -228,6 +230,7 @@ export type UpdateListFromProps = {
     id: string;
     name: string;
     icon: string | undefined;
+    color: string | undefined;
     createdAt: Date;
     updatedAt: Date;
   };
@@ -243,6 +246,7 @@ export type UpdateListProps = {
     id: string;
     name: string;
     icon: string | undefined;
+    color: string | undefined;
     createdAt: Date;
     updatedAt: Date;
   };

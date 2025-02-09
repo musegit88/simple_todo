@@ -8,11 +8,12 @@ import { ListProps, ListType } from "@/types";
 
 // create list
 export const createList = async (values: z.infer<typeof createListSchema>) => {
-  const { name, userId, icon } = values;
+  const { name, userId, icon, color } = values;
   await prisma.list.create({
     data: {
       name,
       icon,
+      color,
       userId,
     },
   });
@@ -29,7 +30,7 @@ export const deleteList = async (listId: string) => {
 
 // update list
 export const updateList = async (values: z.infer<typeof updateListSchema>) => {
-  const { listName, listIcon, listId, userId } = values;
+  const { listName, listIcon, listColor, listId, userId } = values;
   await prisma.list.update({
     where: {
       id: listId,
@@ -38,6 +39,7 @@ export const updateList = async (values: z.infer<typeof updateListSchema>) => {
     data: {
       name: listName,
       icon: listIcon,
+      color: listColor,
     },
   });
 };

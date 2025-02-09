@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { CreateListFromProps } from "@/types";
 import { createListSchema } from "@/validator/create-list-schema";
 import { createList } from "@/app/_actions/list.actions";
+import ColorPicker from "../color-picker";
 
 const CreateListForm = ({ userId }: CreateListFromProps) => {
   const router = useRouter();
@@ -24,6 +25,7 @@ const CreateListForm = ({ userId }: CreateListFromProps) => {
     defaultValues: {
       name: "",
       icon: "",
+      color: "",
       userId,
     },
   });
@@ -80,12 +82,34 @@ const CreateListForm = ({ userId }: CreateListFromProps) => {
               )}
             />
           </div>
-          <div className="flex justify-end">
-            <DialogClose asChild>
-              <Button type="submit" disabled={!form.formState.isDirty}>
+          <div className="flex justify-between">
+            <div className="flex gap-1">
+              <FormField
+                control={form.control}
+                name="color"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <ColorPicker
+                        color={field.value!}
+                        setColor={field.onChange}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="flex justify-end">
+              <Button
+                type="submit"
+                disabled={
+                  !form.formState.isDirty ||
+                  !form.control.getFieldState("name").isDirty
+                }
+              >
                 Add
               </Button>
-            </DialogClose>
+            </div>
           </div>
         </form>
       </Form>
