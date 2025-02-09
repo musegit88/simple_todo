@@ -51,6 +51,7 @@
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
+    "@types/react-color": "^3.0.13",
     "@types/react-dom": "^18",
     "@types/react-highlight-words": "^0.20.0",
     "eslint": "^8",
