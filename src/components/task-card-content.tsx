@@ -19,11 +19,11 @@ const TaskCardContent = ({ characters, task }: TaskCardContentProps) => {
   const path = usePathname();
   return (
     <div className="flex-1 flex flex-col">
-      <div className="w-40 sm:w-full">
+      <div className="w-32 sm:w-full">
         {path !== "/search" ? (
           <p
             className={cn(
-              "whitespace-nowrap overflow-x-scroll",
+              "whitespace-nowrap overflow-x-scroll text-xs sm:text-base",
               task.completed === true && "line-through"
             )}
           >
