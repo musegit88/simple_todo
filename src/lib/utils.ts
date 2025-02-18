@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import qs from "query-string";
@@ -30,5 +31,20 @@ export const removeKeyFromUrlQuery = (
       query: currentUrl,
     });
     return newUrl;
+  }
+};
+
+export const handleListsIds = (
+  checked: boolean | string,
+  listId: string,
+  listsIds: string[],
+  setListsIds: Dispatch<SetStateAction<string[]>>
+) => {
+  if (checked) {
+    setListsIds((current: string[]) => [...current, listId]);
+  }
+  if (!checked) {
+    const newListsIds = listsIds.filter((l: string) => l !== listId);
+    setListsIds(newListsIds);
   }
 };

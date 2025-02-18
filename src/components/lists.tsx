@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { ChevronDown, ChevronRight, List } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import { cn, handleListsIds } from "@/lib/utils";
 import CreateList from "@/components/create-list";
 import { Button } from "@/components/ui/button";
 import ListCard from "@/components/list-card";
@@ -21,15 +21,7 @@ const Lists = ({ lists, userId }: ListProps) => {
       toast.info("Please select another list");
     }
   }, [listsIds.length]);
-  const handleListsIds = (checked: boolean | string, listId: string) => {
-    if (checked) {
-      setListsIds((current) => [...current, listId]);
-    }
-    if (!checked) {
-      const newListsIds = listsIds.filter((l) => l !== listId);
-      setListsIds(newListsIds);
-    }
-  };
+
   return (
     <div className={cn("mt-6 overflow-hidden", show && "h-full")}>
       <div className="flex flex-col gap-4 h-full">
@@ -67,7 +59,7 @@ const Lists = ({ lists, userId }: ListProps) => {
                     <Checkbox
                       checked={listsIds.includes(list.id)}
                       onCheckedChange={(checked) =>
-                        handleListsIds(checked, list.id)
+                        handleListsIds(checked, list.id, listsIds, setListsIds)
                       }
                     />
                   )}
