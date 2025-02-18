@@ -72,7 +72,7 @@ export type IconPickerProps = {
 
 export type ListCardProps = {
   list: ListType;
-  isChecked: boolean;
+  isChecked?: boolean;
 };
 
 export type ListType = {
