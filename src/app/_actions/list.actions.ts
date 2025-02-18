@@ -4,7 +4,6 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma-client";
 import { createListSchema } from "@/validator/create-list-schema";
 import { updateListSchema } from "@/validator/update-list-schema";
-import { ListProps, ListType } from "@/types";
 
 // create list
 export const createList = async (values: z.infer<typeof createListSchema>) => {
@@ -24,6 +23,18 @@ export const deleteList = async (listId: string) => {
   await prisma.list.delete({
     where: {
       id: listId,
+    },
+  });
+};
+
+// delete lists
+export const deleteLists = async (listIds: string[]) => {
+  console.log(listIds);
+  await prisma.list.deleteMany({
+    where: {
+      id: {
+        in: listIds,
+      },
     },
   });
 };
@@ -125,4 +136,16 @@ export const getListNameById = async (listId: string) => {
     });
     return list;
   }
+};
+
+// find list names by id
+export const getListNamesById = async (listIds: string[]) => {
+  const lists = await prisma.list.findMany({
+    where: {
+      id: {
+        in: listIds,
+      },
+    },
+  });
+  return lists.map((list) => list.name);
 };

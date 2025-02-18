@@ -6,12 +6,12 @@ import DeleteList from "@/components/delete-list";
 import { ListCardProps } from "@/types";
 import { cn } from "@/lib/utils";
 
-const ListCard = ({ list }: ListCardProps) => {
+const ListCard = ({ list, isChecked }: ListCardProps) => {
   return (
     <div
       key={list.id}
       className={cn(
-        "group border rounded-md px-2 py-2 flex items-center",
+        "group border rounded-md px-2 py-2 flex items-center w-full",
         list.color
           ? ""
           : "bg-gray-400/20 hover:bg-gray-400/10 transition-colors"
@@ -35,14 +35,16 @@ const ListCard = ({ list }: ListCardProps) => {
           </p>
         )}
       </Link>
-      <div className="flex gap-2 sm:opacity-0 sm:group-hover:opacity-100">
-        <UpdateList list={list} />
-        <DeleteList
-          listId={list.id}
-          listName={list.name}
-          listColor={list.color}
-        />
-      </div>
+      {!isChecked && (
+        <div className="flex gap-2 sm:opacity-0 sm:group-hover:opacity-100">
+          <UpdateList list={list} />
+          <DeleteList
+            listId={list.id}
+            listName={list.name}
+            listColor={list.color}
+          />
+        </div>
+      )}
     </div>
   );
 };
