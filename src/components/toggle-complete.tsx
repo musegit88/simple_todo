@@ -41,6 +41,7 @@ const ToggleComplete = ({ task }: ToggleCompleteProps) => {
       )}
     >
       <Checkbox
+        className="rounded-full"
         checked={optimisticCompleted}
         onCheckedChange={handleCompletedClick}
       />
