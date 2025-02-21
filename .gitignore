@@ -41,7 +41,6 @@ certificates
 #
 /notes.txt
 /src/hooks
-/hooks
 /src/components/context-menu-content.tsx
 /src/components/details-container.tsx
 /src/components/reminder.tsx
@@ -50,6 +49,5 @@ certificates
 /src/lib/resend.ts
 /src/components/date-picker.tsx
 /src/app/(routes)/settings
-/src/app/context.tsx
 /src/app/_actions/google-calendar.ts
 .idea
