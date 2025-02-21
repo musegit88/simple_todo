@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provides";
+import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
   title: "Tasks",
@@ -23,6 +23,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <NextTopLoader showSpinner={false} height={8} />
           <Toaster closeButton position="top-center" richColors />
           <main>{children}</main>
         </ThemeProvider>
