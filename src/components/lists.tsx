@@ -28,6 +28,17 @@ const Lists = ({ lists, userId }: ListProps) => {
         <div className="flex flex-col gap-2">
           <div className="group flex items-center justify-between">
             <div className="flex items-center gap-2">
+              {lists.length > 1 && (
+                <Checkbox
+                  title="select all"
+                  checked={listIds.length === lists.length}
+                  onCheckedChange={(checked) =>
+                    checked
+                      ? setListIds(lists.map((list) => list.id))
+                      : setListIds([])
+                  }
+                />
+              )}
               <List size={18} />
               <div className="flex items-center gap-x-2">
                 <h1>Lists</h1>
@@ -47,7 +58,16 @@ const Lists = ({ lists, userId }: ListProps) => {
             </div>
           </div>
           {listIds.length > 1 && show && (
-            <DeleteLists listsIds={listIds} setListIds={setListIds} />
+            <div className="flex gap-2 w-full">
+              <DeleteLists listsIds={listIds} setListIds={setListIds} />
+              <Button
+                variant="outline"
+                onClick={() => setListIds([])}
+                className="w-full py-4"
+              >
+                Cancle
+              </Button>
+            </div>
           )}
         </div>
         {show && (

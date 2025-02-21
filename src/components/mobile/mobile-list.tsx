@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 
+import { Button } from "@/components/ui/button";
 import CreateList from "@/components/create-list";
 import ListCard from "@/components/list-card";
 import { handleListsIds } from "@/lib/utils";
 import { MobileListProps } from "@/types";
 import { Checkbox } from "@/components/ui/checkbox";
-import DeleteLists from "../delete-lists";
+import DeleteLists from "@/components/delete-lists";
 
 const MobileLists = ({ lists, userId }: MobileListProps) => {
   const [listIds, setListIds] = useState<string[]>([]);
@@ -24,7 +25,12 @@ const MobileLists = ({ lists, userId }: MobileListProps) => {
             <CreateList userId={userId} />
           </div>
           {listIds.length > 1 && (
-            <DeleteLists listsIds={listIds} setListIds={setListIds} />
+            <>
+              <DeleteLists listsIds={listIds} setListIds={setListIds} />
+              <Button variant="outline" onClick={() => setListIds([])}>
+                Cancle
+              </Button>
+            </>
           )}
         </div>
         <div className="flex flex-col space-y-4 overflow-y-auto">
