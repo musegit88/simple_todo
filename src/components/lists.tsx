@@ -14,13 +14,13 @@ import { ListProps } from "@/types";
 
 const Lists = ({ lists, userId }: ListProps) => {
   const [show, setShow] = useState(true);
-  const [listsIds, setListsIds] = useState<string[]>([]);
+  const [listIds, setListIds] = useState<string[]>([]);
 
   useEffect(() => {
-    if (listsIds.length === 1) {
+    if (listIds.length === 1) {
       toast.info("Please select another list");
     }
-  }, [listsIds.length]);
+  }, [listIds.length]);
 
   return (
     <div className={cn("mt-6 overflow-hidden", show && "h-full")}>
@@ -28,6 +28,17 @@ const Lists = ({ lists, userId }: ListProps) => {
         <div className="flex flex-col gap-2">
           <div className="group flex items-center justify-between">
             <div className="flex items-center gap-2">
+              {lists.length > 1 && (
+                <Checkbox
+                  title="select all"
+                  checked={listIds.length === lists.length}
+                  onCheckedChange={(checked) =>
+                    checked
+                      ? setListIds(lists.map((list) => list.id))
+                      : setListIds([])
+                  }
+                />
+              )}
               <List size={18} />
               <div className="flex items-center gap-x-2">
                 <h1>Lists</h1>
@@ -46,8 +57,8 @@ const Lists = ({ lists, userId }: ListProps) => {
               <CreateList userId={userId} />
             </div>
           </div>
-          {listsIds.length > 1 && show && (
-            <DeleteLists listsIds={listsIds} setListsIds={setListsIds} />
+          {listIds.length > 1 && show && (
+            <DeleteLists listsIds={listIds} setListIds={setListIds} />
           )}
         </div>
         {show && (
@@ -57,16 +68,13 @@ const Lists = ({ lists, userId }: ListProps) => {
                 <div key={list.id} className="flex items-center gap-2 ">
                   {lists.length > 1 && (
                     <Checkbox
-                      checked={listsIds.includes(list.id)}
+                      checked={listIds.includes(list.id)}
                       onCheckedChange={(checked) =>
-                        handleListsIds(checked, list.id, listsIds, setListsIds)
+                        handleListsIds(checked, list.id, listIds, setListIds)
                       }
                     />
                   )}
-                  <ListCard
-                    list={list}
-                    isChecked={listsIds.includes(list.id)}
-                  />
+                  <ListCard list={list} isChecked={listIds.includes(list.id)} />
                 </div>
               ))}
             </div>

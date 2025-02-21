@@ -20,10 +20,10 @@ import { toast } from "sonner";
 
 type DeleteListsProps = {
   listsIds: string[];
-  setListsIds: Dispatch<SetStateAction<string[]>>;
+  setListIds: Dispatch<SetStateAction<string[]>>;
 };
 
-const DeleteLists = ({ listsIds, setListsIds }: DeleteListsProps) => {
+const DeleteLists = ({ listsIds, setListIds }: DeleteListsProps) => {
   const router = useRouter();
   const [listsNames, setListNames] = useState<string[]>([]);
   console.log(listsNames);
@@ -39,7 +39,7 @@ const DeleteLists = ({ listsIds, setListsIds }: DeleteListsProps) => {
       const deletedCount = listsIds.length;
       await deleteLists(listsIds);
       router.refresh();
-      setListsIds([]);
+      setListIds([]);
       toast.success(`${deletedCount} lists deleted successfully`);
     } catch (error) {
       console.error(error);

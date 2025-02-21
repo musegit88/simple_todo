@@ -38,13 +38,13 @@ export const handleListsIds = (
   checked: boolean | string,
   listId: string,
   listsIds: string[],
-  setListsIds: Dispatch<SetStateAction<string[]>>
+  setListIds: Dispatch<SetStateAction<string[]>>
 ) => {
   if (checked) {
-    setListsIds((current: string[]) => [...current, listId]);
+    setListIds((current: string[]) => [...current, listId]);
   }
   if (!checked) {
     const newListsIds = listsIds.filter((l: string) => l !== listId);
-    setListsIds(newListsIds);
+    setListIds(newListsIds);
   }
 };
