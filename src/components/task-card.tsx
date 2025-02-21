@@ -17,7 +17,7 @@ const TaskCard = ({ task, characters, lists }: TaskProps) => {
   const [showMobile, setShowMobile] = useState(false);
 
   return (
-    <div>
+    <div className="w-full">
       <div
         className={cn(
           "group bg-gray-400/20 rounded-tl-sm rounded-tr-sm md:rounded-sm  flex w-full overflow-hidden",

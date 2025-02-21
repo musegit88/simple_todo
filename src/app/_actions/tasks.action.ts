@@ -264,7 +264,17 @@ export const deleteTask = async (taskId: string, userId: string) => {
   });
   revalidatePath("/");
 };
-
+// delete tasks by id
+export const deleteTasksById = async (taskIds: string[]) => {
+  await prisma.tasks.deleteMany({
+    where: {
+      id: {
+        in: taskIds,
+      },
+    },
+  });
+  revalidatePath("/");
+};
 // Task counter
 export const allCounts = async (userId: string) => {
   const getAllTasks = await prisma.tasks.count({ where: { userId: userId } });
@@ -294,4 +304,16 @@ export const allCounts = async (userId: string) => {
     },
   });
   return { getAllTasks, getMyDay, getImportant, getPlanned, getCompleted };
+};
+
+// get task names by id
+export const getTaskNamesById = async (taskIds: string[]) => {
+  const tasks = await prisma.tasks.findMany({
+    where: {
+      id: {
+        in: taskIds,
+      },
+    },
+  });
+  return tasks.map((task) => task.name);
 };
