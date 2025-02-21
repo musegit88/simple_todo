@@ -1,6 +1,9 @@
+"use client";
 import { Button } from "@/components/ui/button";
-import { signIn } from "../../../../auth";
 import Image from "next/image";
+import { Loader } from "lucide-react";
+import { googleSignIn } from "@/app/_actions/auth.actions";
+import { useFormStatus } from "react-dom";
 
 const SignIn = () => {
   return (
@@ -8,16 +11,31 @@ const SignIn = () => {
       {/* SignIn with google */}
       <form
         action={async () => {
-          "use server";
-          await signIn("google", { redirectTo: "/" });
+          googleSignIn();
         }}
         className="w-full"
       >
-        <Button
-          variant="default"
-          type="submit"
-          className="flex items-center gap-4 px-10 w-full"
-        >
+        <SubmitButton />
+      </form>
+    </div>
+  );
+};
+
+const SubmitButton = () => {
+  const { pending } = useFormStatus();
+  return (
+    <Button
+      variant="default"
+      type="submit"
+      className="flex items-center gap-4 px-10 w-full"
+      disabled={pending}
+    >
+      {pending ? (
+        <div className="flex justify-center">
+          <Loader className="animate-spin" />
+        </div>
+      ) : (
+        <>
           <div className="flex items-center justify-start w-5 h-5">
             <Image
               src="/assets/images/google.svg"
@@ -28,36 +46,9 @@ const SignIn = () => {
             />
           </div>
           <p className="font-semibold">Continue with Google</p>
-        </Button>
-      </form>
-
-      {/* SignIn with Github */}
-      {/* <form
-        action={async () => {
-          "use server";
-          await signIn("github", { redirectTo: "/" });
-        }}
-        className="w-full"
-      >
-        <Button
-          variant="default"
-          type="submit"
-          className="flex items-center gap-4 px-10 w-full"
-        >
-          <div className="flex items-center justify-start w-5 h-5">
-            <Image
-              src="/assets/images/github.svg"
-              alt="D"
-              width={100}
-              height={100}
-              className="w-8 h-8 "
-            />
-          </div>
-          <p className="font-semibold">Continue with Github</p>
-        </Button>
-      </form> */}
-    </div>
+        </>
+      )}
+    </Button>
   );
 };
-
 export default SignIn;
