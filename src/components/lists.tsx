@@ -28,17 +28,6 @@ const Lists = ({ lists, userId }: ListProps) => {
         <div className="flex flex-col gap-2">
           <div className="group flex items-center justify-between">
             <div className="flex items-center gap-2">
-              {lists.length > 1 && (
-                <Checkbox
-                  title="select all"
-                  checked={listIds.length === lists.length}
-                  onCheckedChange={(checked) =>
-                    checked
-                      ? setListIds(lists.map((list) => list.id))
-                      : setListIds([])
-                  }
-                />
-              )}
               <List size={18} />
               <div className="flex items-center gap-x-2">
                 <h1>Lists</h1>

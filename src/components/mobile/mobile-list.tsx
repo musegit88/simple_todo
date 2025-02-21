@@ -10,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import DeleteLists from "../delete-lists";
 
 const MobileLists = ({ lists, userId }: MobileListProps) => {
-  const [listsIds, setListsIds] = useState<string[]>([]);
+  const [listIds, setListIds] = useState<string[]>([]);
 
   return (
     <div className="md:hidden w-full h-72 overflow-hidden">
@@ -23,8 +23,8 @@ const MobileLists = ({ lists, userId }: MobileListProps) => {
             </div>
             <CreateList userId={userId} />
           </div>
-          {listsIds.length > 1 && (
-            <DeleteLists listsIds={listsIds} setListsIds={setListsIds} />
+          {listIds.length > 1 && (
+            <DeleteLists listsIds={listIds} setListIds={setListIds} />
           )}
         </div>
         <div className="flex flex-col space-y-4 overflow-y-auto">
@@ -32,13 +32,13 @@ const MobileLists = ({ lists, userId }: MobileListProps) => {
             <div key={list.id} className="flex items-center gap-2 ">
               {lists.length > 1 && (
                 <Checkbox
-                  checked={listsIds.includes(list.id)}
+                  checked={listIds.includes(list.id)}
                   onCheckedChange={(checked) =>
-                    handleListsIds(checked, list.id, listsIds, setListsIds)
+                    handleListsIds(checked, list.id, listIds, setListIds)
                   }
                 />
               )}
-              <ListCard list={list} isChecked={listsIds.includes(list.id)} />
+              <ListCard list={list} isChecked={listIds.includes(list.id)} />
             </div>
           ))}
         </div>
