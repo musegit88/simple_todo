@@ -19,6 +19,16 @@ const MobileLists = ({ lists, userId }: MobileListProps) => {
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-x-2">
+              {lists.length > 1 && (
+                <Checkbox
+                  checked={listIds.length === lists.length}
+                  onCheckedChange={(checked) =>
+                    checked
+                      ? setListIds(lists.map((list) => list.id))
+                      : setListIds([])
+                  }
+                />
+              )}
               <h1>Lists</h1>
               <p className="counter_badge">{lists.length}</p>
             </div>
