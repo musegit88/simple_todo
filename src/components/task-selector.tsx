@@ -30,7 +30,7 @@ const TaskSelector = ({ tasks }: TaskSelectorProps) => {
           {path !== "/" && (
             <Label
               htmlFor="checkbox"
-              className="text-base border border-input bg-background hover:bg-accent hover:text-accent-foreground w-fit px-2 py-1 rounded-sm flex items-center gap-1 cursor-pointer"
+              className="text-xs sm:text-base border border-input bg-background hover:bg-accent hover:text-accent-foreground w-fit px-2 py-1 rounded-sm flex items-center gap-1 cursor-pointer"
             >
               select all
             </Label>
