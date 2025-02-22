@@ -29,12 +29,14 @@ const MyTasks = ({ data, isCompleted, characters, lists }: MyTasksProps) => {
       {data.map((task) => (
         <div key={task.id} className="flex items-center gap-1 md:gap-2">
           {data.length > 1 && (
-            <Checkbox
-              checked={taskIds.includes(task.id)}
-              onCheckedChange={(checked) =>
-                handleTaskIds(checked, task.id, setTaskIds, taskIds)
-              }
-            />
+            <div className="self-start py-3">
+              <Checkbox
+                checked={taskIds.includes(task.id)}
+                onCheckedChange={(checked) =>
+                  handleTaskIds(checked, task.id, setTaskIds, taskIds)
+                }
+              />
+            </div>
           )}
           <TaskCard
             key={task.id}
