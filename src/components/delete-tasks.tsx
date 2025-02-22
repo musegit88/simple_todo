@@ -46,7 +46,7 @@ const DeleteTasks = () => {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <div className="bg-destructive text-destructive-foreground hover:bg-destructive/90 w-fit px-2 py-1 rounded-sm flex items-center gap-1 cursor-pointer">
+        <div className="text-xs sm:text-base bg-destructive text-destructive-foreground hover:bg-destructive/90 w-fit px-2 py-1 rounded-sm flex items-center gap-1 cursor-pointer">
           Delete {taskIds.length} tasks
         </div>
       </AlertDialogTrigger>
