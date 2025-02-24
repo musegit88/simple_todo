@@ -106,8 +106,6 @@ export type MobileListProps = {
 
 export type MobileDetailsProps = {
   task: Tasks;
-  showMobile: boolean;
-  setShowMobile: Dispatch<SetStateAction<boolean>>;
 };
 
 export type MoileNavigationProps = {
@@ -196,8 +194,6 @@ export type ToggleCompleteProps = {
 
 export type ToggleDetailsProps = {
   task: Tasks;
-  showMobile: boolean;
-  setShowMobile: Dispatch<SetStateAction<boolean>>;
 };
 
 export type ToggleImportantProps = {

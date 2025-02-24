@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,7 +16,7 @@ import {
 import { toast } from "sonner";
 import { Calendar, CalendarDays, Clock, Sun } from "lucide-react";
 
-import { addKey, cn, removeKeyFromUrlQuery } from "@/lib/utils";
+import { cn, removeKeyFromUrlQuery } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -27,13 +27,8 @@ import { taskUpdateFormSchema } from "@/validator/task-update-form";
 import { MobileDetailsProps } from "@/types";
 import { updateTaskById } from "@/app/_actions/tasks.action";
 
-const MobileDetails = ({
-  task,
-  showMobile,
-  setShowMobile,
-}: MobileDetailsProps) => {
+const MobileDetails = ({ task }: MobileDetailsProps) => {
   const router = useRouter();
-  const path = usePathname();
   const searchParams = useSearchParams();
 
   const form = useForm<z.infer<typeof taskUpdateFormSchema>>({
@@ -50,7 +45,6 @@ const MobileDetails = ({
     try {
       await updateTaskById(values);
       toast.success("Task updated successfully");
-      setShowMobile(false);
       const url = removeKeyFromUrlQuery(searchParams);
       if (url) {
         router.push(url, { scroll: false });
@@ -60,12 +54,8 @@ const MobileDetails = ({
       toast.error("Something went wrong");
     }
   };
-  if (showMobile) {
-    const newUrl = addKey(path, task.id);
-    router.push(newUrl, { scroll: false });
-  }
   return (
-    <div className="flex flex-col gap-2 md:hidden border rounded-bl-sm rounded-br-sm w-full p-2 overflow-hidden">
+    <div className="flex flex-col gap-2 w-full p-2 overflow-hidden">
       <div className="flex items-center w-full">
         {differenceInCalendarDays(new Date(), task.createdAt) >= 1 && (
           <div className="flex items-center">
@@ -197,12 +187,7 @@ const MobileDetails = ({
             />
           </div>
           <div className="flex justify-end">
-            <Button
-              type="submit"
-              variant="outline"
-              size="sm"
-              disabled={!form.formState.isDirty}
-            >
+            <Button type="submit" size="sm" disabled={!form.formState.isDirty}>
               Save changes
             </Button>
           </div>
