@@ -42,7 +42,7 @@ export default async function RoutesLayout({
       </div>
       <div className="relative flex flex-col w-full h-screen">
         <Navbar counts={counts} user={user} lists={lists} />
-        <main className="flex-1 p-4 wrapper rounded-md overflow-y-auto">
+        <main className="flex-1 p-2 md:p-4 wrapper rounded-md overflow-y-auto">
           {children}
         </main>
         <div className="hidden md:block">
