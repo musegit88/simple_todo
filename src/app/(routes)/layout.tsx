@@ -23,7 +23,10 @@ export default async function RoutesLayout({
   if (session?.error === "RefreshError") {
     redirect("/signin");
   }
- if(session?. error === "Missing google tokens"){
+ if(session?.error === "MissingGoogleTokens"){
+redirect("/signin");
+}
+if(session?.error === "NoGoogleAccount"){
 redirect("/signin");
 }
   const user = session?.user as UserProps;
