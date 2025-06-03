@@ -33,6 +33,10 @@ if (!googleAccount) {
   session.error = "NoGoogleAccount";
   return session;
 }
+if(!googleAccount. access_token ||!googleAccount. refresh_token){
+session.error="Missing google tokens";
+return session;
+}
 if (!googleAccount.expires_at || googleAccount.expires_at * 1000 < Date.now()) {
   // ... rest of the logic
 }
