@@ -191,6 +191,7 @@ export type TaskProps = {
   task: Tasks;
   lists?: ListType[];
   characters?: string;
+  isChecked: boolean;
 };
 
 export type ToggleCompleteProps = {

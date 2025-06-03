@@ -43,6 +43,7 @@ const MyTasks = ({ data, isCompleted, characters, lists }: MyTasksProps) => {
             task={task}
             characters={characters}
             lists={lists}
+            isChecked={taskIds.includes(task.id)}
           />
         </div>
       ))}
