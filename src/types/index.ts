@@ -95,13 +95,17 @@ export type ListProps = {
 };
 
 export type MobileCreateTaskProps = {
-  userId: string | undefined;
+  user: UserProps;
 };
 
 export type MobileListProps = {
   lists: ListType[];
   userId: string;
   setShow?: Dispatch<SetStateAction<boolean>>;
+};
+
+export type MobileCreateTaskFormProps = {
+  user: UserProps;
 };
 
 export type MobileDetailsProps = {

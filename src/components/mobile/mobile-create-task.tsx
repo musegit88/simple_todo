@@ -24,7 +24,7 @@ const MobileCreateTaskForm = dynamic(
   }
 );
 
-const MobileCreateTask = ({ userId }: MobileCreateTaskProps) => {
+const MobileCreateTask = ({ user }: MobileCreateTaskProps) => {
   const path = usePathname();
 
   return (
@@ -44,7 +44,7 @@ const MobileCreateTask = ({ userId }: MobileCreateTaskProps) => {
                 <DialogHeader>
                   <DialogTitle>Create Task</DialogTitle>
                 </DialogHeader>
-                <MobileCreateTaskForm userId={userId} />
+                <MobileCreateTaskForm user={user} />
               </DialogContent>
             </Dialog>
           </div>

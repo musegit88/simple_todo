@@ -54,7 +54,7 @@ export default async function RoutesLayout({
           <TaskForm user={user} />
         </div>
         <MobileNavigation counts={counts} />
-        <MobileCreateTask userId={user.id} />
+        <MobileCreateTask user={user} />
       </div>
     </div>
   );
