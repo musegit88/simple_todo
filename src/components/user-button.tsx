@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { signOut } from "next-auth/react";
-import { LogOutIcon } from "lucide-react";
+import { LogOutIcon, Settings } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { UserComponentProps } from "@/types";
+import Link from "next/link";
 
 const UserButton = ({ user }: UserComponentProps) => {
   const [isClient, setIsClient] = useState(false);
@@ -42,6 +43,14 @@ const UserButton = ({ user }: UserComponentProps) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-64">
+        <Link href={"/settings"}>
+          <DropdownMenuItem>
+            <div className="flex items-center gap-2">
+              <Settings size={18} />
+              <p>Settings</p>
+            </div>
+          </DropdownMenuItem>
+        </Link>
         <DropdownMenuItem onClick={() => signOut()}>
           <div className="flex items-center gap-2">
             <LogOutIcon size={18} />
