@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { redirect } from "next/navigation";
 
-import { auth } from "@/auth";
+import { auth, signIn } from "@/auth";
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
 import TaskForm from "@/components/forms/task-form";
@@ -19,6 +19,11 @@ export default async function RoutesLayout({
   children: ReactNode;
 }) {
   const session = await auth();
+
+  if (session?.error === "RefreshError") {
+    redirect("/signin");
+  }
+
   const user = session?.user as UserProps;
   if (!user) {
     redirect("/signin");
