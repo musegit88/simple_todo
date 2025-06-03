@@ -33,7 +33,7 @@ if (!googleAccount) {
   session.error = "NoGoogleAccount";
   return session;
 }
-if(!googleAccount. access_token ||!googleAccount. refresh_token){
+if(!googleAccount.access_token ||!googleAccount.refresh_token){
 session.error="Missing google tokens";
 return session;
 }
