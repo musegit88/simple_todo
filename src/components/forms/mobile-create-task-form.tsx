@@ -13,9 +13,10 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { SmartDatetimeInput } from "@/components/extension/smart-datetime-input";
 import { taskFormSchema } from "@/validator/task-form-schema";
 import { createTask } from "@/app/_actions/tasks.action";
+import { createGoogleTask } from "@/app/_actions/google.tasks.action";
 
 type MobileCreateTaskFormProps = {
-  userId: string | undefined;
+  userId: string;
 };
 
 const MobileCreateTaskForm = ({ userId }: MobileCreateTaskFormProps) => {
@@ -37,8 +38,16 @@ const MobileCreateTaskForm = ({ userId }: MobileCreateTaskFormProps) => {
     },
   });
   const onSubmit = async (values: z.infer<typeof taskFormSchema>) => {
+    const googleTask = await createGoogleTask(
+      userId,
+      values.name,
+      values.date!
+    );
     try {
-      await createTask(values);
+      await createTask({
+        googleTaskId: googleTask.id ? googleTask.id : null,
+        ...values,
+      });
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");

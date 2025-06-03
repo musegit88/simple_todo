@@ -10,4 +10,5 @@ export const taskFormSchema = z.object({
   dynamicPath: z.string(),
   userId: z.string(),
   listId: z.string().optional(),
+  googleTaskId: z.string().optional().nullable(),
 });

@@ -6,12 +6,13 @@ import { endOfToday } from "date-fns";
 
 import { prisma } from "@/lib/prisma-client";
 import { taskFormSchema } from "@/validator/task-form-schema";
-import { taskUpdateFormSchema } from "@/validator/task-update-form";
+import { taskUpdateFormSchema } from "@/validator/task-update-schema";
 import { getListNameById } from "./list.actions";
 
 // Create task
 export const createTask = async (values: z.infer<typeof taskFormSchema>) => {
-  const { name, date, dynamicPath, listId, userId, path } = values;
+  const { name, date, dynamicPath, listId, userId, path, googleTaskId } =
+    values;
   if (path === "/my-day") {
     await prisma.tasks.create({
       data: {
@@ -49,6 +50,7 @@ export const createTask = async (values: z.infer<typeof taskFormSchema>) => {
         name,
         duedate: date === undefined ? endOfToday() : date,
         userId,
+        googleTaskId,
       },
     });
     return { message: "Task created successfully" };
@@ -108,7 +110,7 @@ export const getSearchedTask = async (searchWord: string, userId: string) => {
 export const updateTaskById = async (
   values: z.infer<typeof taskUpdateFormSchema>
 ) => {
-  const { name, taskId, userId, date, description } = values;
+  const { name, taskId, userId, date, description, updatedAt } = values;
   const tasks = await prisma.tasks.update({
     where: {
       id: taskId,
@@ -119,6 +121,7 @@ export const updateTaskById = async (
       duedate: date,
       name: name,
       myday: false,
+      updatedAt,
     },
   });
   revalidatePath("/,/myday,/planned");

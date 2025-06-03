@@ -17,8 +17,9 @@ import { DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { SmartDatetimeInput } from "@/components/extension/smart-datetime-input";
 import { UpdateTaskFormProps } from "@/types";
-import { taskUpdateFormSchema } from "@/validator/task-update-form";
+import { taskUpdateFormSchema } from "@/validator/task-update-schema";
 import { updateTaskById } from "@/app/_actions/tasks.action";
+import { updateGoogleTask } from "@/app/_actions/google.tasks.action";
 
 const UpdateTaskForm = ({ task, setShow }: UpdateTaskFormProps) => {
   const router = useRouter();
@@ -31,10 +32,15 @@ const UpdateTaskForm = ({ task, setShow }: UpdateTaskFormProps) => {
       description: task.description || undefined,
       taskId: task.id,
       userId: task.userId,
+      googleTaskId: task.googleTaskId,
+      updatedAt: new Date(),
     },
   });
 
   const onSubmit = async (values: z.infer<typeof taskUpdateFormSchema>) => {
+    if (task.googleTaskId) {
+      await updateGoogleTask(values);
+    }
     try {
       const response = await updateTaskById(values);
       toast.success(response.message);

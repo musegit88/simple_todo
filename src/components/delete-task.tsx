@@ -16,9 +16,13 @@ import {
 } from "@/components/ui/alert-dialog";
 import { DeleteTaskProps } from "@/types";
 import { deleteTask } from "@/app/_actions/tasks.action";
+import { deleteGoogleTask } from "@/app/_actions/google.tasks.action";
 
 const DeleteTask = ({ task }: DeleteTaskProps) => {
   const handleTaskDelete = async () => {
+    if (task.googleTaskId) {
+      await deleteGoogleTask(task.userId, task.googleTaskId);
+    }
     try {
       await deleteTask(task.id, task.userId);
       toast.success("Task deleted successfully");

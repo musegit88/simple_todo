@@ -179,6 +179,7 @@ export type TaskFormProps = {
     name: string | null;
     email: string;
     image: string | null;
+    googleTaskIntegration: boolean;
   };
 };
 
@@ -258,6 +259,7 @@ export type UserProps = {
   name: string | null;
   email: string;
   image: string | null;
+  googleTaskIntegration: boolean;
 };
 
 export type UpdateTaskFormProps = {

@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { SmartDatetimeInput } from "@/components/extension/smart-datetime-input";
-import { taskUpdateFormSchema } from "@/validator/task-update-form";
+import { taskUpdateFormSchema } from "@/validator/task-update-schema";
 import { MobileDetailsProps } from "@/types";
 import { updateTaskById } from "@/app/_actions/tasks.action";
 

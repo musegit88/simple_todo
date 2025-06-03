@@ -48,6 +48,6 @@ certificates
 /src/components/detailsbyId.tsx
 /src/lib/resend.ts
 /src/components/date-picker.tsx
-/src/app/(routes)/settings
 /src/app/_actions/google-calendar.ts
+/src/app/api/google-tasks
 .idea

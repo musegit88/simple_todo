@@ -15,6 +15,7 @@ import { SmartDatetimeInput } from "@/components/extension/smart-datetime-input"
 import { TaskFormProps } from "@/types";
 import { taskFormSchema } from "@/validator/task-form-schema";
 import { createTask } from "@/app/_actions/tasks.action";
+import { createGoogleTask } from "@/app/_actions/google.tasks.action";
 
 const TaskForm = ({ user }: TaskFormProps) => {
   const router = useRouter();
@@ -39,11 +40,23 @@ const TaskForm = ({ user }: TaskFormProps) => {
   });
 
   const onSubmit = async (values: z.infer<typeof taskFormSchema>) => {
+    // create task in google tasks if google tasks integration is enabled in user preferences
+    const googleTask = await createGoogleTask(
+      userId,
+      user.googleTaskIntegration,
+      values.name,
+      values.date!
+    );
+    // create task
     try {
-      const response = await createTask(values);
+      const response = await createTask({
+        googleTaskId: googleTask ? googleTask?.id : null,
+        ...values,
+      });
       toast.success(response.message);
     } catch (error) {
       toast.error("Something went wrong");
+      console.error(error);
     } finally {
       form.reset();
       router.refresh();
@@ -52,68 +65,71 @@ const TaskForm = ({ user }: TaskFormProps) => {
 
   return (
     <>
-      {path !== "/completed" && path !== "/planned" && path !== "/search" && (
-        <div className="wrapper">
-          <div className="flex justify-center p-1 md:p-2">
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="w-full px-2 py-1 md:px-4 md:py-2 rounded-sm border bg-background flex items-center"
-              >
-                <div className="flex items-center gap-x-2 w-full">
-                  <div className="flex items-center w-full">
-                    <Plus className="mr-2" />
+      {path !== "/completed" &&
+        path !== "/planned" &&
+        path !== "/search" &&
+        path !== "/settings" && (
+          <div className="wrapper">
+            <div className="flex justify-center p-1 md:p-2">
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="w-full px-2 py-1 md:px-4 md:py-2 rounded-sm border bg-background flex items-center"
+                >
+                  <div className="flex items-center gap-x-2 w-full">
+                    <div className="flex items-center w-full">
+                      <Plus className="mr-2" />
+                      <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormControl>
+                              <Input
+                                className={cn(
+                                  "outline-none w-full bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0",
+                                  form.formState.errors.name?.message &&
+                                    "placeholder:text-red-400"
+                                )}
+                                placeholder={
+                                  form.formState.errors.name?.message
+                                    ? form.formState.errors.name?.message
+                                    : "Type something"
+                                }
+                                maxLength={100}
+                                {...field}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
                     <FormField
                       control={form.control}
-                      name="name"
+                      name="date"
                       render={({ field }) => (
-                        <FormItem className="w-full">
+                        <FormItem>
                           <FormControl>
-                            <Input
-                              className={cn(
-                                "outline-none w-full bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0",
-                                form.formState.errors.name?.message &&
-                                  "placeholder:text-red-400"
-                              )}
-                              placeholder={
-                                form.formState.errors.name?.message
-                                  ? form.formState.errors.name?.message
-                                  : "Type something"
-                              }
-                              maxLength={100}
-                              {...field}
+                            <SmartDatetimeInput
+                              name="datetime"
+                              value={field.value}
+                              onValueChange={field.onChange}
+                              placeholder="e.g. tomorrow at 4pm"
                             />
                           </FormControl>
                         </FormItem>
                       )}
                     />
-                  </div>
-                  <FormField
-                    control={form.control}
-                    name="date"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <SmartDatetimeInput
-                            name="datetime"
-                            value={field.value}
-                            onValueChange={field.onChange}
-                            placeholder="e.g. tomorrow at 4pm"
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
 
-                  <Button type="submit" variant="secondary">
-                    <ArrowUp size={18} />
-                  </Button>
-                </div>
-              </form>
-            </Form>
+                    <Button type="submit" variant="secondary">
+                      <ArrowUp size={18} />
+                    </Button>
+                  </div>
+                </form>
+              </Form>
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </>
   );
 };
