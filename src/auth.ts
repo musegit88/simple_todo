@@ -90,6 +90,6 @@ if (!googleAccount.expires_at || googleAccount.expires_at * 1000 < Date.now()) {
 
 declare module "next-auth" {
   interface Session {
-    error?: "RefreshError";
+    error?: "RefreshError" || "NoGoogleAccount" || "Missing google tokens";
   }
 }
