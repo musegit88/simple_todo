@@ -29,17 +29,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           provider: "google",
         },
       });
-if (!googleAccount) {
-  session.error = "NoGoogleAccount";
-  return session;
-}
-if(!googleAccount.access_token ||!googleAccount.refresh_token){
-session.error="MissingGoogleTokens";
-return session;
-}
-if (!googleAccount.expires_at || googleAccount.expires_at * 1000 < Date.now()) {
-  // ... rest of the logic
-}
+
+      if (
+        !googleAccount.expires_at ||
+        googleAccount.expires_at * 1000 < Date.now()
+      ) {
+        // ... rest of the logic
+      }
       if (googleAccount.expires_at! * 1000 < Date.now()) {
         // If the access token has expired, try to refresh it
         try {
@@ -90,6 +86,6 @@ if (!googleAccount.expires_at || googleAccount.expires_at * 1000 < Date.now()) {
 
 declare module "next-auth" {
   interface Session {
-    error?: "RefreshError" | "NoGoogleAccount" | "MissingGoogleTokens";
+    error?: "RefreshError";
   }
 }
