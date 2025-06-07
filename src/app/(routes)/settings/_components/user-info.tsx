@@ -13,6 +13,7 @@ import {
 } from "@/app/_actions/google.tasks.action";
 import { useRouter } from "next/navigation";
 import { UserProps } from "@/types";
+import Image from "next/image";
 
 type UserInfoProps = {
   user: UserProps;
@@ -47,19 +48,27 @@ const UserInfo = ({ user }: UserInfoProps) => {
 
         <Button
           variant="destructive"
-          className="px-8"
+          className="px-4 md:px-8"
           onClick={() => signOut()}
         >
           Sign out
         </Button>
       </div>
       <SelectSeparator />
-      <Label className="flex items-center gap-2 ml-4">
-        <Checkbox
-          checked={user.googleTaskIntegration}
-          onCheckedChange={handelCheckbox}
+      <Label className="flex items-center w-full sm:w-fit gap-2 sm:ml-4 border px-4 py-4 rounded-md cursor-pointer hover:shadow-md">
+        <Image
+          src={"/assets/images/google-tasks.svg"}
+          alt="logo"
+          width={40}
+          height={40}
         />
-        <p>Google Tasks Integration</p>
+        <div className="flex items-center gap-2">
+          <Checkbox
+            checked={user.googleTaskIntegration}
+            onCheckedChange={handelCheckbox}
+          />
+          <p>Google Tasks Integration</p>
+        </div>
       </Label>
     </div>
   );
