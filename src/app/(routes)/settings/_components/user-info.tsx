@@ -14,6 +14,7 @@ import {
 import { useRouter } from "next/navigation";
 import { UserProps } from "@/types";
 import Image from "next/image";
+import { startTransition, useOptimistic, useState } from "react";
 
 type UserInfoProps = {
   user: UserProps;
@@ -21,13 +22,23 @@ type UserInfoProps = {
 
 const UserInfo = ({ user }: UserInfoProps) => {
   const router = useRouter();
+  const [enabled, setEnabled] = useState(user.googleTaskIntegration);
+  const [optimisticEnabled, addOptimisticEnabled] = useOptimistic(enabled);
   const handelCheckbox = async () => {
     if (user.googleTaskIntegration) {
-      await disableGoogleIntegration(user.id);
-      router.refresh();
+      startTransition(async () => {
+        addOptimisticEnabled(!enabled);
+        await disableGoogleIntegration(user.id);
+        setEnabled(!enabled);
+        router.refresh();
+      });
     } else {
-      await enableGoogleIntegration(user.id);
-      router.refresh();
+      startTransition(async () => {
+        addOptimisticEnabled(!enabled);
+        await enableGoogleIntegration(user.id);
+        setEnabled(!enabled);
+        router.refresh();
+      });
     }
   };
   return (
@@ -64,7 +75,7 @@ const UserInfo = ({ user }: UserInfoProps) => {
         />
         <div className="flex items-center gap-2">
           <Checkbox
-            checked={user.googleTaskIntegration}
+            checked={optimisticEnabled}
             onCheckedChange={handelCheckbox}
           />
           <p>Google Tasks Integration</p>
