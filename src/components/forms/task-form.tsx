@@ -16,11 +16,13 @@ import { TaskFormProps } from "@/types";
 import { taskFormSchema } from "@/validator/task-form-schema";
 import { createTask } from "@/app/_actions/tasks.action";
 import { createGoogleTask } from "@/app/_actions/google.tasks.action";
+import { useOptimisticTask } from "../../hooks/useOptimisticTask";
 
 const TaskForm = ({ user }: TaskFormProps) => {
   const router = useRouter();
   const path = usePathname();
   const userId = user.id;
+  const { setOptimisticTask } = useOptimisticTask();
 
   const dynamicPath = `/list/${path.split("/")[2]}`;
   const listId = path.split("/")[2];
@@ -40,6 +42,17 @@ const TaskForm = ({ user }: TaskFormProps) => {
   });
 
   const onSubmit = async (values: z.infer<typeof taskFormSchema>) => {
+    setOptimisticTask([
+      {
+        id: "",
+        name: values.name,
+        date: values.date === undefined ? new Date() : values.date,
+        listId: values.listId!,
+        userId: values.userId,
+        dynamicPath: values.dynamicPath,
+        googleTaskId: null, // or set as needed
+      },
+    ]);
     // create task in google tasks if google tasks integration is enabled in user preferences
     const googleTask = await createGoogleTask(
       userId,
