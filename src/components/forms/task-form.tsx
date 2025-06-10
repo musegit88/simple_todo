@@ -50,7 +50,7 @@ const TaskForm = ({ user }: TaskFormProps) => {
         listId: values.listId!,
         userId: values.userId,
         dynamicPath: values.dynamicPath,
-        googleTaskId: null, // or set as needed
+        googleTaskId: null,
       },
     ]);
     // create task in google tasks if google tasks integration is enabled in user preferences
