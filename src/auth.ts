@@ -31,12 +31,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       });
 
       if (
-        !googleAccount.expires_at ||
+        googleAccount &&
+        googleAccount.expires_at &&
         googleAccount.expires_at * 1000 < Date.now()
       ) {
-        // ... rest of the logic
-      }
-      if (googleAccount.expires_at! * 1000 < Date.now()) {
         // If the access token has expired, try to refresh it
         try {
           const response = await fetch("https://oauth2.googleapis.com/token", {
@@ -47,7 +45,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               grant_type: "refresh_token",
               refresh_token: googleAccount.refresh_token!,
             }),
-            signal: AbortSignal.timeout(10000),
           });
           const tokensOrError = await response.json();
 
