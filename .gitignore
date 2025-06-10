@@ -40,7 +40,8 @@ certificates
 
 #
 /notes.txt
-/src/hooks
+/src/hooks/useTaskCardState.ts
+/src/components/task-card-skeleton.tsx
 /src/components/context-menu-content.tsx
 /src/components/details-container.tsx
 /src/components/reminder.tsx
