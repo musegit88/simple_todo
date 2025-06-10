@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { useTaskIds } from "../../hooks/useTaskIds";
+import { useTaskIds } from "../hooks/useTaskIds";
 import { Tasks } from "@prisma/client";
 
 type TaskSelectorProps = {

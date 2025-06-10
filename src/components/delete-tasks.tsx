@@ -13,7 +13,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useTaskIds } from "../../hooks/useTaskIds";
+import { useTaskIds } from "../hooks/useTaskIds";
 import { deleteTasksById, getTaskNamesById } from "@/app/_actions/tasks.action";
 import { toast } from "sonner";
 

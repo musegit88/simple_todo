@@ -1,6 +1,6 @@
 "use client";
 
-import { useTaskIds } from "../../hooks/useTaskIds";
+import { useTaskIds } from "../hooks/useTaskIds";
 import DeleteTasks from "./delete-tasks";
 
 const ActionButtons = () => {
