@@ -26,7 +26,12 @@ const ListCard = ({ list, isChecked }: ListCardProps) => {
         )}
       >
         <div>{list.icon ? list.icon : <List size={14} />}</div>
-        <p className={cn(list.color === "#ffffff" && "text-black")}>
+        <p
+          className={cn(
+            list.color === "#ffffff" && "text-black",
+            "w-32 whitespace-nowrap overflow-x-scroll"
+          )}
+        >
           {list.name}
         </p>
         {list._count.tasks > 0 && (
