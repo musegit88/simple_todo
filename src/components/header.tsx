@@ -35,7 +35,10 @@ const Header = ({ color, title, listPath, listIcon }: HeaderProps) => {
           </div>
         )}
         <div className="flex items-center gap-2">
-          <h1 className="header_h1" style={{ color: color }}>
+          <h1
+            className="header_h1 w-72 sm:w-[800px] whitespace-nowrap overflow-x-scroll"
+            style={{ color: color }}
+          >
             {title}
           </h1>
         </div>
