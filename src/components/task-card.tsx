@@ -12,7 +12,7 @@ import { TaskProps } from "@/types";
 const TaskCard = ({ task, characters, lists, isChecked }: TaskProps) => {
   return (
     <div className="w-full">
-      <div className="group bg-gray-400/20 rounded-tl-sm rounded-tr-sm md:rounded-sm  flex w-full overflow-hidden">
+      <div className="group bg-gray-400/20 rounded-md flex w-full overflow-hidden">
         <ToggleComplete task={task} />
         <div className="p-2 flex gap-2 w-full">
           <TaskCardContent task={task} characters={characters} />
