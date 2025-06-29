@@ -21,7 +21,7 @@ const Header = ({ color, title, listPath, listIcon }: HeaderProps) => {
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-2">
-        {path === "/" && <Home color={color} />}
+        {path === "/home" && <Home color={color} />}
         {path === "/my-day" && <FileText color={color} />}
         {path === "/important" && <Star color={color} />}
         {path === "/planned" && <CalendarPlus2 color={color} />}
