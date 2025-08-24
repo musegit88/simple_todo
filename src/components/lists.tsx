@@ -53,8 +53,7 @@ const Lists = ({ lists, userId }: ListProps) => {
               >
                 {show ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
               </Button>
-
-              <CreateList userId={userId} />
+              {listIds.length < 1 && <CreateList userId={userId} />}
             </div>
           </div>
           {listIds.length > 1 && show && (

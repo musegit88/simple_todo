@@ -32,7 +32,7 @@ const MobileLists = ({ lists, userId }: MobileListProps) => {
               <h1>Lists</h1>
               <p className="counter_badge">{lists.length}</p>
             </div>
-            <CreateList userId={userId} />
+            {listIds.length < 1 && <CreateList userId={userId} />}
           </div>
           {listIds.length > 1 && (
             <>
