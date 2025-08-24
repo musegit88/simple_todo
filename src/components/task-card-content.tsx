@@ -19,8 +19,8 @@ const TaskCardContent = ({ characters, task }: TaskCardContentProps) => {
   const path = usePathname();
   return (
     <div className="flex-1 flex flex-col">
-      <div className="w-32 sm:w-full">
-        {path !== "/search" ? (
+      {path !== "/search" && (
+        <div className="w-32 sm:w-full">
           <p
             className={cn(
               "whitespace-nowrap overflow-x-scroll text-xs sm:text-base",
@@ -29,15 +29,40 @@ const TaskCardContent = ({ characters, task }: TaskCardContentProps) => {
           >
             {task.name}
           </p>
-        ) : (
-          <Highlighter
-            highlightClassName="bg-transparent text-green-400 font-bold"
-            searchWords={[characters!]}
-            autoEscape={true}
-            textToHighlight={task.name}
-          />
-        )}
-      </div>
+        </div>
+      )}
+      {path === "/search" && (
+        <div className="w-32 sm:w-full">
+          <p className="whitespace-nowrap overflow-x-scroll text-xs sm:text-base">
+            <Highlighter
+              highlightClassName="bg-transparent text-green-400 font-bold"
+              searchWords={[characters!]}
+              autoEscape={true}
+              textToHighlight={task.name}
+            />
+          </p>
+        </div>
+      )}
+      {/* {path !== "/search" ? (
+        <div className="w-32 sm:w-full">
+          <p
+            className={cn(
+              "whitespace-nowrap overflow-x-scroll text-xs sm:text-base",
+              task.completed === true && "line-through"
+            )}
+          >
+            {task.name}
+          </p>
+        </div>
+      ) : (
+        <Highlighter
+          highlightClassName="bg-transparent text-green-400 font-bold"
+          searchWords={[characters!]}
+          autoEscape={true}
+          textToHighlight={task.name}
+        />
+      )} */}
+
       {task.duedate > endOfToday() && task.duedate > endOfTomorrow() && (
         <div className="flex items-center text-green-400 ml-4">
           <Calendar size={12} />
