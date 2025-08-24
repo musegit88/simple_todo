@@ -5,24 +5,19 @@ import { useState } from "react";
 import { AlignJustify } from "lucide-react";
 import MobileSidebar from "@/components/mobile/mobile-sidebar";
 import { ToggleSidebarProps } from "@/types";
+import { useSidebar } from "@/hooks/useSidebar";
 
 const ToggleSidebar = ({ color, counts, user, lists }: ToggleSidebarProps) => {
-  const [show, setShow] = useState(false);
+  const sidebar = useSidebar();
   return (
     <>
       <div
         className="md:hidden p-2 w-10 rounded-md bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
-        onClick={() => setShow(true)}
+        onClick={sidebar.onOpen}
       >
         <AlignJustify color={color} />
       </div>
-      <MobileSidebar
-        show={show}
-        setShow={setShow}
-        counts={counts}
-        user={user}
-        lists={lists}
-      />
+      <MobileSidebar counts={counts} user={user} lists={lists} />
     </>
   );
 };

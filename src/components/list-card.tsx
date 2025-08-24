@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { List } from "lucide-react";
 
@@ -5,8 +7,10 @@ import UpdateList from "@/components/update-list";
 import DeleteList from "@/components/delete-list";
 import { ListCardProps } from "@/types";
 import { cn } from "@/lib/utils";
+import { useSidebar } from "@/hooks/useSidebar";
 
 const ListCard = ({ list, isChecked }: ListCardProps) => {
+  const sidebar = useSidebar();
   return (
     <div
       key={list.id}
@@ -24,6 +28,7 @@ const ListCard = ({ list, isChecked }: ListCardProps) => {
           "flex items-center gap-1 w-full",
           list.color === "#ffffff" && "text-black"
         )}
+        onClick={sidebar.onClose}
       >
         <div>{list.icon ? list.icon : <List size={14} />}</div>
         <p

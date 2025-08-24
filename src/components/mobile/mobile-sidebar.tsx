@@ -8,18 +8,17 @@ import Searchbar from "@/components/searchbar";
 import UserDropdown from "@/components/user-button";
 import MobileLists from "@/components/mobile/mobile-list";
 import { MobileSidebarProps } from "@/types";
+import { useSidebar } from "@/hooks/useSidebar";
 
-const MobileSidebar = ({ show, setShow, user, lists }: MobileSidebarProps) => {
+const MobileSidebar = ({ user, lists }: MobileSidebarProps) => {
   const path = usePathname();
+  const sidebar = useSidebar();
 
   return (
     <>
-      {show && (
+      {sidebar.isOpen && (
         <>
-          <div
-            className="mobile_sidebar_overlay"
-            onClick={() => setShow(false)}
-          />
+          <div className="mobile_sidebar_overlay" onClick={sidebar.onClose} />
           <div className="mobile_sidebar z-10">
             <div className="flex flex-col justify-between h-full p-4 space-y-6">
               <div className="flex flex-col gap-4">
@@ -29,17 +28,13 @@ const MobileSidebar = ({ show, setShow, user, lists }: MobileSidebarProps) => {
                     <ModeToggle />
                   </div>
                   <div className="flex justify-end w-full">
-                    <X onClick={() => setShow(false)} />
+                    <X onClick={sidebar.onClose} />
                   </div>
                 </div>
                 <div className="flex flex-col space-y-6 h-full">
-                  <Searchbar setShow={setShow} show={show} />
+                  <Searchbar />
                   {/*Mobile list view*/}
-                  <MobileLists
-                    lists={lists}
-                    setShow={setShow}
-                    userId={user.id}
-                  />
+                  <MobileLists lists={lists} userId={user.id} />
                 </div>
               </div>
             </div>

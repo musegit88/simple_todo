@@ -5,9 +5,10 @@ import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { Search } from "lucide-react";
 
-import { serachbarProps } from "@/types";
+import { useSidebar } from "@/hooks/useSidebar";
 
-const Searchbar = ({ show, setShow }: serachbarProps) => {
+const Searchbar = () => {
+  const sidebar = useSidebar();
   const router = useRouter();
   const [query, setQuery] = useState("");
   const search = () => {
@@ -20,8 +21,8 @@ const Searchbar = ({ show, setShow }: serachbarProps) => {
       router.push(newUrl, { scroll: false });
       setQuery("");
     }
-    if (show) {
-      setShow(false);
+    if (sidebar.isOpen) {
+      sidebar.onClose();
     }
   };
   return (
