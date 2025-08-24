@@ -101,7 +101,6 @@ export type MobileCreateTaskProps = {
 export type MobileListProps = {
   lists: ListType[];
   userId: string;
-  setShow?: Dispatch<SetStateAction<boolean>>;
 };
 
 export type MobileCreateTaskFormProps = {
@@ -123,8 +122,6 @@ export type MoileNavigationProps = {
 };
 
 export type MobileSidebarProps = {
-  show?: boolean;
-  setShow: any;
   counts: {
     getAllTasks: number;
     getMyDay: number;
