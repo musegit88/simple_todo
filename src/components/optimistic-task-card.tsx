@@ -25,7 +25,7 @@ type OptimisticTaskCardProps = {
 const OptimisticTaskCard = ({ optimisticTask }: OptimisticTaskCardProps) => {
   return (
     <div className="w-full">
-      <div className="group bg-gray-400/20 rounded-tl-sm rounded-tr-sm md:rounded-sm  flex w-full overflow-hidden">
+      <div className="group bg-gray-400/20 rounded-md flex w-full overflow-hidden">
         {/* checkbox */}
         <div className="px-1 flex items-center bg-blue-500">
           <Checkbox className="rounded-full" />
@@ -34,7 +34,11 @@ const OptimisticTaskCard = ({ optimisticTask }: OptimisticTaskCardProps) => {
         <div className="p-2 flex gap-2 w-full">
           {/* task card content */}
           <div className="flex-1 flex flex-col">
-            <div className="w-32 sm:w-full">{optimisticTask.name}</div>
+            <div className="w-32 sm:w-full">
+              <p className="whitespace-nowrap overflow-x-scroll text-xs sm:text-base">
+                {optimisticTask.name}
+              </p>
+            </div>
             {optimisticTask.date > endOfToday() &&
               optimisticTask.date > endOfTomorrow() && (
                 <div className="flex items-center text-green-400 ml-4">
