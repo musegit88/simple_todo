@@ -26,6 +26,7 @@ import { SmartDatetimeInput } from "@/components/extension/smart-datetime-input"
 import { taskUpdateFormSchema } from "@/validator/task-update-schema";
 import { MobileDetailsProps } from "@/types";
 import { updateTaskById } from "@/app/_actions/tasks.action";
+import { updateGoogleTask } from "@/app/_actions/google.tasks.action";
 
 const MobileDetails = ({ task }: MobileDetailsProps) => {
   const router = useRouter();
@@ -39,9 +40,14 @@ const MobileDetails = ({ task }: MobileDetailsProps) => {
       description: task.description || undefined,
       taskId: task.id,
       userId: task.userId,
+      googleTaskId: task.googleTaskId,
+      updatedAt: new Date(),
     },
   });
   const onSubmit = async (values: z.infer<typeof taskUpdateFormSchema>) => {
+    if (task.googleTaskId) {
+      await updateGoogleTask(values);
+    }
     try {
       await updateTaskById(values);
       toast.success("Task updated successfully");
