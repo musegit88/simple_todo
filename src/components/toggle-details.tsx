@@ -53,7 +53,7 @@ const ToggleDetails = ({ task }: ToggleDetailsProps) => {
       </div>
       <div className="flex items-center md:hidden">
         <Drawer>
-          <DrawerTrigger className="text-emerald-400">
+          <DrawerTrigger className="text-emerald-400" onClick={handleClick}>
             <Pen className="w-4 h-4" />
           </DrawerTrigger>
           <DrawerContent>
