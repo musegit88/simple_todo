@@ -48,7 +48,7 @@ const Details = ({ show, setShow, task }: DetailsProps) => {
                   </div>
                 )}
               {differenceInHours(new Date(), task.createdAt) < 1 &&
-                differenceInMinutes(new Date(), task.createdAt) > 1 && (
+                differenceInMinutes(new Date(), task.createdAt) >= 1 && (
                   <div className="flex items-center">
                     <Clock />
                     <p className="flex items-center w-full text-xs ml-2">
@@ -68,6 +68,60 @@ const Details = ({ show, setShow, task }: DetailsProps) => {
                     seconds ago
                   </p>
                 </div>
+              )}
+              {task.updatedAt > task.createdAt && (
+                <>
+                  {differenceInCalendarDays(new Date(), task.createdAt) >=
+                    1 && (
+                    <div className="flex items-center">
+                      <CalendarDays />
+                      <p className="flex items-center w-full text-xs ml-2">
+                        Updated{" "}
+                        {differenceInCalendarDays(new Date(), task.updatedAt)}{" "}
+                        day
+                        {differenceInCalendarDays(new Date(), task.updatedAt) >
+                          1 && `s`}{" "}
+                        ago
+                      </p>
+                    </div>
+                  )}
+                  {differenceInCalendarDays(new Date(), task.updatedAt) < 1 &&
+                    differenceInHours(new Date(), task.updatedAt) >= 1 && (
+                      <div className="flex items-center">
+                        <Clock />
+                        <p className="flex items-center w-full text-xs ml-2">
+                          {differenceInHours(new Date(), task.updatedAt)} hour{" "}
+                          {differenceInHours(new Date(), task.updatedAt) > 1 &&
+                            `s`}{" "}
+                          ago
+                        </p>
+                      </div>
+                    )}
+                  {differenceInHours(new Date(), task.updatedAt) < 1 &&
+                    differenceInMinutes(new Date(), task.updatedAt) >= 1 && (
+                      <div className="flex items-center">
+                        <Clock />
+                        <p className="flex items-center w-full text-xs ml-2">
+                          updated{" "}
+                          {differenceInMinutes(new Date(), task.updatedAt)}{" "}
+                          minute
+                          {differenceInMinutes(new Date(), task.updatedAt) >
+                            1 && `s`}{" "}
+                          ago
+                        </p>
+                      </div>
+                    )}
+                  {differenceInMinutes(new Date(), task.updatedAt) < 1 && (
+                    <div className="flex items-center">
+                      <Clock />
+                      <p className="flex items-center w-full text-xs ml-2">
+                        updated{" "}
+                        {differenceInSeconds(new Date(), task.updatedAt)}{" "}
+                        seconds ago
+                      </p>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </DialogHeader>
