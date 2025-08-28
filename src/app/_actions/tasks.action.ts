@@ -278,6 +278,20 @@ export const deleteTasksById = async (taskIds: string[]) => {
   });
   revalidatePath("/");
 };
+export const markTasksImportantTasksById = async (taskIds: string[]) => {
+  await prisma.tasks.updateMany({
+    where: {
+      id: {
+        in: taskIds,
+      },
+      important: false,
+    },
+    data: {
+      important: true,
+    },
+  });
+  revalidatePath("/");
+};
 // Task counter
 export const allCounts = async (userId: string) => {
   const getAllTasks = await prisma.tasks.count({ where: { userId: userId } });
