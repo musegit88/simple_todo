@@ -85,7 +85,7 @@ const MobileDetails = ({ task }: MobileDetailsProps) => {
             </div>
           )}
         {differenceInHours(new Date(), task.createdAt) < 1 &&
-          differenceInMinutes(new Date(), task.createdAt) > 1 && (
+          differenceInMinutes(new Date(), task.createdAt) >= 1 && (
             <div className="flex items-center">
               <Clock size={18} />
               <p className="flex items-center w-full text-xs ml-2">
