@@ -23,7 +23,6 @@ const DeleteTasks = () => {
   const { taskIds, setTaskIds } = useTaskIds();
   const router = useRouter();
   const [taskNames, setTaskNames] = useState<string[]>([]);
-  console.log(taskNames);
   useEffect(() => {
     const handelTaskNames = async () => {
       const names = await getTaskNamesById(taskIds);
