@@ -13,9 +13,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import { useTaskIds } from "../hooks/useTaskIds";
 import { deleteTasksById, getTaskNamesById } from "@/app/_actions/tasks.action";
 import { toast } from "sonner";
+import { Trash2 } from "lucide-react";
 
 const DeleteTasks = () => {
   const { taskIds, setTaskIds } = useTaskIds();
@@ -45,10 +47,14 @@ const DeleteTasks = () => {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
-        <div className="text-xs sm:text-base bg-destructive text-destructive-foreground hover:bg-destructive/90 w-fit px-2 py-1 rounded-sm flex items-center gap-1 cursor-pointer">
-          Delete {taskIds.length} tasks
-        </div>
+      <AlertDialogTrigger asChild>
+        <Button
+          className="text-xs sm:text-base bg-destructive text-destructive-foreground hover:bg-destructive/90 w-fit px-2 py-1 rounded-sm flex items-center gap-1 cursor-pointer"
+          size="sm"
+        >
+          <Trash2 size={18} />
+          {taskIds.length} tasks
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
