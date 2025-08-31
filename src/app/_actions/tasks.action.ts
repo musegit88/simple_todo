@@ -267,6 +267,7 @@ export const deleteTask = async (taskId: string, userId: string) => {
   });
   revalidatePath("/");
 };
+
 // delete tasks by id
 export const deleteTasksById = async (taskIds: string[]) => {
   await prisma.tasks.deleteMany({
@@ -278,6 +279,8 @@ export const deleteTasksById = async (taskIds: string[]) => {
   });
   revalidatePath("/");
 };
+
+// Mark as important tasks by id
 export const markTasksImportantTasksById = async (taskIds: string[]) => {
   await prisma.tasks.updateMany({
     where: {
@@ -292,6 +295,19 @@ export const markTasksImportantTasksById = async (taskIds: string[]) => {
   });
   revalidatePath("/");
 };
+
+export const getTasksMarkedUnImportant = async (taskIds: string[]) => {
+  const response = await prisma.tasks.findMany({
+    where: {
+      id: {
+        in: taskIds,
+      },
+      important: false,
+    },
+  });
+  return response.map((tasks) => tasks.id);
+};
+
 // Task counter
 export const allCounts = async (userId: string) => {
   const getAllTasks = await prisma.tasks.count({ where: { userId: userId } });
