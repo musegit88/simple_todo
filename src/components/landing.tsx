@@ -1,6 +1,5 @@
 "use client";
 
-import { ModeToggle } from "@/components/mode-toggle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,33 +14,15 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import Footer from "./footer";
+import LandingNav from "./landing-nav";
 
 const Landing = () => {
   const year = new Date().getFullYear();
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b broder-2 bg-white/80 backdrop-blur-sm dark:bg-black/80">
-        <div className="container flex items-center justify-between mx-auto p-4 md:px-6 ">
-          <Link href={"/"} className="flex items-center space-x-2">
-            <h2 className="font-bold">Simple</h2>
-            <Image
-              src={"/icon-192x192.png"}
-              alt="Logo"
-              width={40}
-              height={40}
-            />
-          </Link>
-          <div className="flex items-center space-x-4">
-            <Link href={"/signin"}>
-              <Button className="text-white bg-blue-500 hover:bg-blue-600">
-                Log in
-              </Button>
-            </Link>
-            <ModeToggle />
-          </div>
-        </div>
-      </header>
+      <LandingNav />
       {/*End Header */}
       {/* Hero */}
       <section className="py-20 lg:py-32 bg-gray-50 dark:bg-transparent">
@@ -335,13 +316,7 @@ const Landing = () => {
       </section>
       {/* End Call to action */}
       {/* End How It Works */}
-      <footer className="py-12">
-        <div className="container mx-auto px-4">
-          <div className="border-t border-gray-800 mt-12 pt-8 text-center">
-            <p>&copy; {year} Simple Todo. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
