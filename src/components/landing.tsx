@@ -171,7 +171,7 @@ const Landing = () => {
               Simple workflow, powerful results
             </h2>
             <p className="text-xl dark:text-gray-400 max-w-2xl mx-auto">
-              Get started in minutes and transform how you manage your daily
+              Get started in seconds and transform how you manage your daily
               tasks
             </p>
           </div>
