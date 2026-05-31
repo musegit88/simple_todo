@@ -96,6 +96,7 @@ export type ListProps = {
 
 export type MobileCreateTaskProps = {
   user: UserProps;
+  lists: List[];
 };
 
 export type MobileListProps = {
@@ -105,6 +106,7 @@ export type MobileListProps = {
 
 export type MobileCreateTaskFormProps = {
   user: UserProps;
+  lists: List[];
 };
 
 export type MobileDetailsProps = {
@@ -182,6 +184,7 @@ export type TaskFormProps = {
     image: string | null;
     googleTaskIntegration: boolean;
   };
+  lists: List[];
 };
 
 export type TaskProps = {
