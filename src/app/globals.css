@@ -109,7 +109,7 @@ body {
     @apply md:hidden p-2 flex items-center justify-between;
   }
   .header_h1 {
-    @apply capitalize font-semibold text-lg md:text-2xl;
+    @apply font-semibold text-lg md:text-2xl;
   }
   .counter_badge {
     @apply bg-gray-400/20 p-1 w-5 h-5 rounded-full flex items-center justify-center text-xs;
