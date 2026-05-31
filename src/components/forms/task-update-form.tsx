@@ -142,7 +142,15 @@ const UpdateTaskForm = ({ task, setShow }: UpdateTaskFormProps) => {
         </div>
 
         <DialogFooter>
-          <Button type="submit" size="sm" disabled={!form.formState.isDirty}>
+          <Button
+            type="submit"
+            size="sm"
+            disabled={
+              !form.formState.isDirty ||
+              form.formState.isSubmitting ||
+              form.formState.isSubmitted
+            }
+          >
             Save changes
           </Button>
         </DialogFooter>
