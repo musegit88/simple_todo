@@ -58,7 +58,7 @@ const SelectList = ({ lists, task }: AddToListProps) => {
                     onClick={() => toggleTaskInList(list.id)}
                     className="flex items-center justify-between"
                   >
-                    <p>{list.name}</p>
+                    <p className="w-48 overflow-x-scroll">{list.name}</p>
                     {list.id === task.listId && (
                       <CheckCircle2 size={14} color="green" />
                     )}
