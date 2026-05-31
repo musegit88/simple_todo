@@ -65,3 +65,6 @@ export const handleTaskIds = (
     setTaskIds(newTaskIds);
   }
 };
+
+export const truncate = (str: string, max = 18) =>
+  str.length > max ? str.slice(0, max) + "..." : str;

@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { truncate } from "@/lib/utils";
 
 type DeleteListsProps = {
   listsIds: string[];
@@ -26,7 +27,6 @@ type DeleteListsProps = {
 const DeleteLists = ({ listsIds, setListIds }: DeleteListsProps) => {
   const router = useRouter();
   const [listsNames, setListNames] = useState<string[]>([]);
-  console.log(listsNames);
   useEffect(() => {
     const handelListNames = async () => {
       const names = await getListNamesById(listsIds);
@@ -59,7 +59,10 @@ const DeleteLists = ({ listsIds, setListIds }: DeleteListsProps) => {
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete{" "}
             <strong className="text-red-500">
-              {listsNames.map((listName) => listName).toString()}
+              {listsNames
+                .toReversed()
+                .map((listName) => truncate(listName))
+                .join(", ")}
             </strong>
           </AlertDialogDescription>
         </AlertDialogHeader>
