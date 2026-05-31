@@ -10,20 +10,30 @@ import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { SmartDatetimeInput } from "@/components/extension/smart-datetime-input";
 import { taskFormSchema } from "@/validator/task-form-schema";
 import { createTask } from "@/app/_actions/tasks.action";
 import { createGoogleTask } from "@/app/_actions/google.tasks.action";
 import { MobileCreateTaskFormProps } from "@/types";
 import { useOptimisticTask } from "@/hooks/useOptimisticTask";
+import { List } from "lucide-react";
 
-const MobileCreateTaskForm = ({ user }: MobileCreateTaskFormProps) => {
+const MobileCreateTaskForm = ({ user, lists }: MobileCreateTaskFormProps) => {
   const router = useRouter();
   const path = usePathname();
   const { setOptimisticTask } = useOptimisticTask();
 
   const dynamicPath = `/list/${path.split("/")[2]}`;
-  const listId = path.split("/")[2];
+  const listIdFromPath = path.split("/")[2];
 
   const form = useForm<z.infer<typeof taskFormSchema>>({
     resolver: zodResolver(taskFormSchema),
@@ -31,7 +41,7 @@ const MobileCreateTaskForm = ({ user }: MobileCreateTaskFormProps) => {
       path,
       name: "",
       date: undefined,
-      listId,
+      listId: listIdFromPath ? listIdFromPath : "",
       dynamicPath,
       userId: user.id,
     },
@@ -91,6 +101,35 @@ const MobileCreateTaskForm = ({ user }: MobileCreateTaskFormProps) => {
                       }
                       {...field}
                     />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="listId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Select
+                      disabled={!!listIdFromPath}
+                      onValueChange={field.onChange}
+                      value={field.value}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="select list" />
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Lists</SelectLabel>
+                            {lists.map((list) => (
+                              <SelectItem key={list.id} value={list.id}>
+                                {list.name}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </SelectTrigger>
+                    </Select>
                   </FormControl>
                 </FormItem>
               )}

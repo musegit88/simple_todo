@@ -9,6 +9,7 @@ export const taskUpdateFormSchema = z.object({
   description: z.string().max(255).optional(),
   taskId: z.string(),
   userId: z.string(),
+  listId: z.string().optional(),
   googleTaskId: z.string().optional().nullable(),
   updatedAt: z.date(),
 });

@@ -12,6 +12,7 @@ import MobileCreateTask from "@/components/mobile/mobile-create-task";
 import { ListType, UserProps } from "@/types";
 import { allLists } from "../_actions/list.actions";
 import { allCounts } from "../_actions/tasks.action";
+import { List } from "@prisma/client";
 
 export default async function RoutesLayout({
   children,
@@ -50,10 +51,10 @@ export default async function RoutesLayout({
           {children}
         </main>
         <div className="hidden md:block">
-          <TaskForm user={user} />
+          <TaskForm user={user} lists={lists as List[]} />
         </div>
         <MobileNavigation counts={counts} />
-        <MobileCreateTask user={user} />
+        <MobileCreateTask user={user} lists={lists as List[]} />
       </div>
     </div>
   );

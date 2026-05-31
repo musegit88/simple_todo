@@ -20,6 +20,7 @@ export const createTask = async (values: z.infer<typeof taskFormSchema>) => {
         duedate: endOfToday(),
         myday: true,
         userId,
+        listId,
       },
     });
     return { message: "Task created successfully in My Day" };
@@ -30,6 +31,7 @@ export const createTask = async (values: z.infer<typeof taskFormSchema>) => {
         duedate: date === undefined ? new Date() : date,
         important: true,
         userId,
+        listId,
       },
     });
     return { message: "Task created successfully in Important" };
@@ -50,6 +52,7 @@ export const createTask = async (values: z.infer<typeof taskFormSchema>) => {
         name,
         duedate: date === undefined ? endOfToday() : date,
         userId,
+        listId,
         googleTaskId,
       },
     });

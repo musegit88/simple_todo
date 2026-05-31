@@ -6,11 +6,20 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 
-import { ArrowUp, Plus } from "lucide-react";
+import { ArrowUp, List, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { SmartDatetimeInput } from "@/components/extension/smart-datetime-input";
 import { TaskFormProps } from "@/types";
 import { taskFormSchema } from "@/validator/task-form-schema";
@@ -18,14 +27,14 @@ import { createTask } from "@/app/_actions/tasks.action";
 import { createGoogleTask } from "@/app/_actions/google.tasks.action";
 import { useOptimisticTask } from "../../hooks/useOptimisticTask";
 
-const TaskForm = ({ user }: TaskFormProps) => {
+const TaskForm = ({ user, lists }: TaskFormProps) => {
   const router = useRouter();
   const path = usePathname();
   const userId = user.id;
   const { setOptimisticTask } = useOptimisticTask();
 
   const dynamicPath = `/list/${path.split("/")[2]}`;
-  const listId = path.split("/")[2];
+  const listIdFromPath = path.split("/")[2];
 
   const form = useForm<z.infer<typeof taskFormSchema>>({
     resolver: zodResolver(taskFormSchema),
@@ -34,7 +43,7 @@ const TaskForm = ({ user }: TaskFormProps) => {
       name: "",
       date: undefined,
       // If the task is created in list page
-      listId,
+      listId: listIdFromPath ? listIdFromPath : "",
       // If the task is created in list page
       dynamicPath,
       userId: userId,
@@ -119,6 +128,39 @@ const TaskForm = ({ user }: TaskFormProps) => {
                     </div>
                     <FormField
                       control={form.control}
+                      name="listId"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Select
+                              disabled={!!listIdFromPath}
+                              onValueChange={field.onChange}
+                              value={field.value}
+                            >
+                              <SelectTrigger>
+                                <SelectValue placeholder={<List />} />
+                                <SelectContent>
+                                  <SelectGroup>
+                                    <SelectLabel>Lists</SelectLabel>
+                                    {lists.map((list) => (
+                                      <SelectItem
+                                        key={list.id}
+                                        value={list.id}
+                                        className="w-48 overflow-x-scroll"
+                                      >
+                                        {list.name}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectGroup>
+                                </SelectContent>
+                              </SelectTrigger>
+                            </Select>
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
                       name="date"
                       render={({ field }) => (
                         <FormItem>
@@ -134,7 +176,11 @@ const TaskForm = ({ user }: TaskFormProps) => {
                       )}
                     />
 
-                    <Button type="submit" variant="secondary">
+                    <Button
+                      type="submit"
+                      variant="secondary"
+                      disabled={!form.watch("name")}
+                    >
                       <ArrowUp size={18} />
                     </Button>
                   </div>
