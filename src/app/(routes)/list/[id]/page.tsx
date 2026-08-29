@@ -5,13 +5,15 @@ import MyTasks from "@/components/my-tasks";
 import { ListType } from "@/types";
 import { allLists, getListById } from "@/app/_actions/list.actions";
 
-const ListPage = async ({ params }: { params: { id: string } }) => {
+type Params = Promise<{ id: string }>;
+
+const ListPage = async ({ params }: { params: Params }) => {
   const session = await auth();
   const userId = session?.user?.id;
 
   if (!userId) redirect("/sigin");
 
-  const { id } = params;
+  const { id } = await params;
   const singleList = await getListById(id, userId!);
   if (singleList === null) redirect("/");
   const lists = (await allLists(userId!)) as ListType[];
