@@ -9,6 +9,9 @@ export const taskFormSchema = z.object({
   date: z.date().optional(),
   dynamicPath: z.string(),
   userId: z.string(),
-  listId: z.string().optional(),
+  listId: z.preprocess(
+    (value) => (typeof value === "string" ? value.trim() || undefined : value),
+    z.string().optional(),
+  ),
   googleTaskId: z.string().optional().nullable(),
 });

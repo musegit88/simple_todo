@@ -43,7 +43,7 @@ const TaskForm = ({ user, lists }: TaskFormProps) => {
       name: "",
       date: undefined,
       // If the task is created in list page
-      listId: listIdFromPath ? listIdFromPath : "",
+      listId: listIdFromPath || undefined,
       // If the task is created in list page
       dynamicPath,
       userId: userId,
@@ -56,7 +56,7 @@ const TaskForm = ({ user, lists }: TaskFormProps) => {
         id: "",
         name: values.name,
         date: values.date === undefined ? new Date() : values.date,
-        listId: values.listId!,
+        listId: values.listId,
         userId: values.userId,
         dynamicPath: values.dynamicPath,
         googleTaskId: null,
@@ -67,7 +67,7 @@ const TaskForm = ({ user, lists }: TaskFormProps) => {
       userId,
       user.googleTaskIntegration,
       values.name,
-      values.date!
+      values.date!,
     );
     // create task
     try {
@@ -96,7 +96,7 @@ const TaskForm = ({ user, lists }: TaskFormProps) => {
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="w-full px-2 py-1 md:px-4 md:py-2 rounded-sm border bg-background flex items-center"
+                  className="w-full px-2 py-1 md:px-4 md:py-2 rounded-sm   flex items-center"
                 >
                   <div className="flex items-center gap-x-2 w-full">
                     <div className="flex items-center w-full">
@@ -111,12 +111,12 @@ const TaskForm = ({ user, lists }: TaskFormProps) => {
                                 className={cn(
                                   "outline-none w-full bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0",
                                   form.formState.errors.name?.message &&
-                                    "placeholder:text-red-400"
+                                    "placeholder:text-red-400",
                                 )}
                                 placeholder={
                                   form.formState.errors.name?.message
                                     ? form.formState.errors.name?.message
-                                    : "Type something"
+                                    : "Add a task"
                                 }
                                 maxLength={100}
                                 {...field}
@@ -137,7 +137,7 @@ const TaskForm = ({ user, lists }: TaskFormProps) => {
                               onValueChange={field.onChange}
                               value={field.value}
                             >
-                              <SelectTrigger>
+                              <SelectTrigger className="rounded-2xl">
                                 <SelectValue placeholder={<List />} />
                                 <SelectContent>
                                   <SelectGroup>

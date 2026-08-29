@@ -41,7 +41,7 @@ const MobileCreateTaskForm = ({ user, lists }: MobileCreateTaskFormProps) => {
       path,
       name: "",
       date: undefined,
-      listId: listIdFromPath ? listIdFromPath : "",
+      listId: listIdFromPath || undefined,
       dynamicPath,
       userId: user.id,
     },
@@ -52,7 +52,7 @@ const MobileCreateTaskForm = ({ user, lists }: MobileCreateTaskFormProps) => {
         id: "",
         name: values.name,
         date: values.date === undefined ? new Date() : values.date,
-        listId: values.listId!,
+        listId: values.listId,
         userId: values.userId,
         dynamicPath: values.dynamicPath,
         googleTaskId: null,
@@ -62,7 +62,7 @@ const MobileCreateTaskForm = ({ user, lists }: MobileCreateTaskFormProps) => {
       values.userId,
       user.googleTaskIntegration,
       values.name,
-      values.date!
+      values.date!,
     );
     try {
       await createTask({
@@ -92,7 +92,7 @@ const MobileCreateTaskForm = ({ user, lists }: MobileCreateTaskFormProps) => {
                       className={cn(
                         " outline-none w-full bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0",
                         form.formState.errors.name?.message &&
-                          "placeholder:text-red-400"
+                          "placeholder:text-red-400",
                       )}
                       placeholder={
                         form.formState.errors.name?.message

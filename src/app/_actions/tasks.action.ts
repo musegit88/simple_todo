@@ -9,10 +9,32 @@ import { taskFormSchema } from "@/validator/task-form-schema";
 import { taskUpdateFormSchema } from "@/validator/task-update-schema";
 import { getListNameById } from "./list.actions";
 
+const normalizeListId = (listId?: string | null) => {
+  const trimmed = listId?.trim();
+  return trimmed && trimmed.length > 0 ? trimmed : null;
+};
+
 // Create task
 export const createTask = async (values: z.infer<typeof taskFormSchema>) => {
   const { name, date, dynamicPath, listId, userId, path, googleTaskId } =
     values;
+  const safeListId = normalizeListId(listId);
+
+  if (safeListId) {
+    const listExists = await prisma.list.findUnique({
+      where: {
+        id: safeListId,
+        userId,
+      },
+    });
+
+    if (!listExists) {
+      throw new Error(
+        "The selected list no longer exists. Please refresh and try again.",
+      );
+    }
+  }
+
   if (path === "/my-day") {
     await prisma.tasks.create({
       data: {
@@ -20,7 +42,7 @@ export const createTask = async (values: z.infer<typeof taskFormSchema>) => {
         duedate: endOfToday(),
         myday: true,
         userId,
-        listId,
+        ...(safeListId ? { listId: safeListId } : {}),
       },
     });
     return { message: "Task created successfully in My Day" };
@@ -31,17 +53,17 @@ export const createTask = async (values: z.infer<typeof taskFormSchema>) => {
         duedate: date === undefined ? new Date() : date,
         important: true,
         userId,
-        listId,
+        ...(safeListId ? { listId: safeListId } : {}),
       },
     });
     return { message: "Task created successfully in Important" };
   } else if (path === dynamicPath) {
-    const listName = await getListNameById(listId!);
+    const listName = await getListNameById(safeListId ?? "");
     await prisma.tasks.create({
       data: {
         name,
         duedate: date === undefined ? endOfToday() : date,
-        listId: listId,
+        ...(safeListId ? { listId: safeListId } : {}),
         userId,
       },
     });
@@ -52,7 +74,7 @@ export const createTask = async (values: z.infer<typeof taskFormSchema>) => {
         name,
         duedate: date === undefined ? endOfToday() : date,
         userId,
-        listId,
+        ...(safeListId ? { listId: safeListId } : {}),
         googleTaskId,
       },
     });
@@ -111,7 +133,7 @@ export const getSearchedTask = async (searchWord: string, userId: string) => {
 
 // Update tasks
 export const updateTaskById = async (
-  values: z.infer<typeof taskUpdateFormSchema>
+  values: z.infer<typeof taskUpdateFormSchema>,
 ) => {
   const { name, taskId, userId, date, description, updatedAt } = values;
   const tasks = await prisma.tasks.update({

@@ -18,7 +18,7 @@ type useOptimisticTaskProps = {
         name: string;
         date: Date;
         userId: string;
-        listId: string;
+        listId?: string;
         dynamicPath: string;
         googleTaskId: string | null;
       }[]
@@ -34,7 +34,7 @@ export const useOptimisticTask = create<useOptimisticTaskProps>((set) => ({
         typeof updater === "function"
           ? (
               updater as (
-                prev: typeof state.optimisticTask
+                prev: typeof state.optimisticTask,
               ) => typeof state.optimisticTask
             )(state.optimisticTask)
           : updater,
