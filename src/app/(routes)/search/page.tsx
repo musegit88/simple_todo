@@ -7,11 +7,9 @@ import { allLists } from "@/app/_actions/list.actions";
 import { getSearchedTask } from "@/app/_actions/tasks.action";
 import ActionButtons from "@/components/actions-buttons";
 
-const SearchPage = async ({
-  searchParams,
-}: {
-  searchParams: { query: string };
-}) => {
+type SearchParams = Promise<{ query: string }>;
+
+const SearchPage = async ({ searchParams }: { searchParams: SearchParams }) => {
   const session = await auth();
   const user = session?.user as UserProps;
 
@@ -19,10 +17,12 @@ const SearchPage = async ({
 
   const lists = (await allLists(user.id!)) as ListType[];
 
-  if (!searchParams.query) {
+  const { query } = await searchParams;
+
+  if (!query) {
     redirect("/");
   }
-  const searchTerm = searchParams?.query;
+  const searchTerm = query;
   const tasks = await getSearchedTask(searchTerm, user?.id);
   return (
     <div>
