@@ -21,17 +21,21 @@ const HomePage = async () => {
   const isCompleted = completedTasks.length > 0;
 
   return (
-    <div className="overflow-hidden">
-      {tasks.length > 0 && (
-        <div className="flex items-center gap-2">
-          <TaskSelector tasks={tasks} />
-          <ActionButtons />
-        </div>
-      )}
-      <MyTasks data={tasks} isCompleted={isCompleted} lists={lists} />
-      {completedTasks.length > 0 && (
-        <CompletedTasks completedTasks={completedTasks} lists={lists} />
-      )}
+    <div className="flex flex-col md:flex-row gap-4 overflow-hidden">
+      <div className="flex-1 w-full">
+        {tasks.length > 0 && (
+          <div className="flex items-center gap-2">
+            <TaskSelector tasks={tasks} />
+            <ActionButtons />
+          </div>
+        )}
+        <MyTasks data={tasks} isCompleted={isCompleted} lists={lists} />
+      </div>
+      <div className="flex-1 w-full">
+        {completedTasks.length > 0 && (
+          <CompletedTasks completedTasks={completedTasks} lists={lists} />
+        )}
+      </div>
     </div>
   );
 };

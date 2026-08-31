@@ -97,7 +97,7 @@ const MobileCreateTaskForm = ({ user, lists }: MobileCreateTaskFormProps) => {
                       placeholder={
                         form.formState.errors.name?.message
                           ? form.formState.errors.name?.message
-                          : "Type something"
+                          : "Add a task"
                       }
                       {...field}
                     />

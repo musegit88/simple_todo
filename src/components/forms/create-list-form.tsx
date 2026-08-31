@@ -67,7 +67,7 @@ const CreateListForm = ({ userId }: CreateListFromProps) => {
                       className={cn(
                         "outline-none w-full bg-transparent border focus-visible:ring-0 focus-visible:ring-offset-0",
                         form.formState.errors.name?.message &&
-                          "placeholder:text-red-400"
+                          "placeholder:text-red-400",
                       )}
                       minLength={1}
                       placeholder={
@@ -104,7 +104,8 @@ const CreateListForm = ({ userId }: CreateListFromProps) => {
                 type="submit"
                 disabled={
                   !form.formState.isDirty ||
-                  !form.control.getFieldState("name").isDirty
+                  !form.control.getFieldState("name").isDirty ||
+                  form.formState.isSubmitting
                 }
               >
                 Add

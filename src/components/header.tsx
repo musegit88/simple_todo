@@ -5,9 +5,9 @@ import { format } from "date-fns";
 import {
   CalendarPlus2,
   CircleCheck,
-  FileText,
-  Home,
+  Sun,
   List,
+  ListTodo,
   Search,
   Settings,
   Star,
@@ -21,8 +21,8 @@ const Header = ({ color, title, listPath, listIcon }: HeaderProps) => {
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-2">
-        {path === "/home" && <Home color={color} />}
-        {path === "/my-day" && <FileText color={color} />}
+        {path === "/tasks" && <ListTodo color={color} />}
+        {path === "/my-day" && <Sun color={color} />}
         {path === "/important" && <Star color={color} />}
         {path === "/planned" && <CalendarPlus2 color={color} />}
         {path === "/completed" && <CircleCheck color={color} />}
@@ -36,7 +36,7 @@ const Header = ({ color, title, listPath, listIcon }: HeaderProps) => {
         )}
         <div className="flex items-center gap-2">
           <h1
-            className="header_h1 w-52 whitespace-nowrap overflow-x-scroll"
+            className="header_h1 w-52 whitespace-nowrap capitalize overflow-x-scroll"
             style={{ color: color }}
           >
             {title}

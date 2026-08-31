@@ -23,6 +23,7 @@ export type CounterProps = {
     getCompleted: number;
   };
   title: string;
+  className: string;
 };
 
 export type CreateListProps = {

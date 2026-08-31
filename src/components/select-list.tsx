@@ -46,7 +46,7 @@ const SelectList = ({ lists, task }: AddToListProps) => {
             <List size={18} />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent align="start" side="left">
           <DropdownMenuLabel>Select List</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>

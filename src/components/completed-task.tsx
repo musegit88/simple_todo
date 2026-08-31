@@ -11,7 +11,7 @@ const CompletedTasks = ({ completedTasks, lists }: CompletedTasksProps) => {
   return (
     <div className="flex flex-col mt-2">
       <div
-        className="bg-gray-400/20 w-fit px-2 py-1 rounded-sm flex items-center"
+        className="bg-gray-400/20 w-fit px-2 py-1 rounded-2xl flex items-center cursor-pointer text-sm"
         onClick={() => setShow((prev) => !prev)}
       >
         {show ? <ChevronDown size={20} /> : <ChevronRight size={20} />}

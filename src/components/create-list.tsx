@@ -21,8 +21,6 @@ const CreateListForm = dynamic(() => import("./forms/create-list-form"), {
 });
 
 const CreateList = ({ userId }: CreateListProps) => {
-  const router = useRouter();
-
   return (
     <div title="Create list">
       <Dialog>

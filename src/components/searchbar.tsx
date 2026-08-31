@@ -26,7 +26,7 @@ const Searchbar = () => {
     }
   };
   return (
-    <div className="w-full px-2 py-2 rounded-sm border bg-background flex items-center">
+    <div className="w-full px-3 py-2 rounded-2xl border bg-background flex items-center">
       <input
         type="text"
         placeholder="search"

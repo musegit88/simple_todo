@@ -1,35 +1,73 @@
 "use client";
 
-import ToggleDetails from "@/components/toggle-details";
+import { GripVertical, MoreVertical, View } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { TaskProps } from "@/types";
+
+import DeleteTask from "./delete-task";
 import ToggleMyday from "@/components/toggle-myday";
-import DeleteTask from "@/components/delete-task";
 import ToggleComplete from "@/components/toggle-complete";
 import ToggleImportant from "@/components/toggle-important";
 import TaskCardContent from "@/components/task-card-content";
 import SelectList from "@/components/select-list";
-import { TaskProps } from "@/types";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import ToggleDetails from "./toggle-details";
 
 const TaskCard = ({ task, characters, lists, isChecked }: TaskProps) => {
   return (
-    <div className="w-full">
-      <div className="group bg-gray-400/20 rounded-md flex w-full overflow-hidden">
-        <ToggleComplete task={task} />
-        <div className="p-2 flex gap-2 w-full">
+    // <div className="w-full">
+    <div className="group border rounded-2xl flex w-full overflow-hidden hover:shadow-lg duration-300 transition-all">
+      <div
+        className={cn(
+          "px-1 flex items-center",
+          task.completed === true ? "bg-green-500" : "bg-blue-500",
+        )}
+      >
+        <GripVertical />
+      </div>
+      <div className="p-2 flex gap-2 w-full min-w-0">
+        <div className="flex-1 min-w-0 overflow-hidden">
           <TaskCardContent task={task} characters={characters} />
+        </div>
+        <div className="flex w-36 shrink-0 items-center justify-end gap-2">
           {!isChecked && (
             <>
-              <div className="opacity-100 md:opacity-0 md:group-hover:opacity-100 flex items-center gap-2">
+              <div className="flex items-center gap-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                 <SelectList lists={lists} task={task} />
                 <ToggleDetails task={task} />
-                <ToggleMyday task={task} />
                 <DeleteTask task={task} />
               </div>
-              <ToggleImportant task={task} />
+              <DropdownMenu>
+                <DropdownMenuTrigger title="more">
+                  <MoreVertical className="w-5 h-5" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="start"
+                  className="space-y-2 w-72"
+                  side="left"
+                >
+                  <DropdownMenuItem className="flex items-center gap-2">
+                    <ToggleMyday task={task} />
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <ToggleImportant task={task} />
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="flex items-center gap-2">
+                    <ToggleComplete task={task} />
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </>
           )}
         </div>
       </div>
     </div>
+    // </div>
   );
 };
 

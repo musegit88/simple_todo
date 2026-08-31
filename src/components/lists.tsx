@@ -23,20 +23,21 @@ const Lists = ({ lists, userId }: ListProps) => {
   }, [listIds.length]);
 
   return (
-    <div className={cn("mt-6 overflow-hidden", show && "h-full")}>
-      <div className="flex flex-col gap-4 h-full">
-        <div className="flex flex-col gap-2">
+    <div className="h-full flex flex-col min-h-0">
+      <div className="flex flex-col gap-4 h-full min-h-0">
+        <div className="flex flex-col gap-2 flex-shrink-0">
           <div className="group flex items-center justify-between">
             <div className="flex items-center gap-2">
               {lists.length > 1 && (
                 <Checkbox
                   title="select all"
                   checked={listIds.length === lists.length}
-                  onCheckedChange={(checked) =>
-                    checked
+                  onCheckedChange={(checked) => {
+                    (checked
                       ? setListIds(lists.map((list) => list.id))
-                      : setListIds([])
-                  }
+                      : setListIds([]),
+                      !show && setShow((prev) => !prev));
+                  }}
                 />
               )}
               <List size={18} />
@@ -70,8 +71,8 @@ const Lists = ({ lists, userId }: ListProps) => {
           )}
         </div>
         {show && (
-          <>
-            <div className="flex flex-col space-y-4 overflow-y-auto">
+          <div className="flex-1 min-h-0 overflow-y-auto pr-1">
+            <div className="flex flex-col space-y-4">
               {lists.map((list) => (
                 <div key={list.id} className="flex items-center gap-2 ">
                   {lists.length > 1 && (
@@ -86,7 +87,7 @@ const Lists = ({ lists, userId }: ListProps) => {
                 </div>
               ))}
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>

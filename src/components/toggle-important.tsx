@@ -37,20 +37,24 @@ const ToggleImportant = ({ task }: ToggleImportantProps) => {
   };
   return (
     <div
-      className="flex items-center justify-center w-fit cursor-pointer"
+      className="flex items-center justify-center w-full cursor-pointer"
       title={
         task.important === true ? "remove importance" : "mark as important"
       }
     >
-      <div onClick={handleImportantClick}>
+      <div
+        onClick={handleImportantClick}
+        className="flex items-center w-full gap-2"
+      >
         <Star
           className={cn(
+            "w-5 h-5",
             optimisticImportant
               ? "text-yellow-400 fill-yellow-400 transition duration-1000"
-              : "text-yellow-400"
+              : "text-yellow-400",
           )}
-          size={18}
         />
+        <span>Important</span>
       </div>
     </div>
   );

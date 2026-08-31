@@ -35,13 +35,20 @@ const ToggleMyday = ({ task }: ToggleMydayProps) => {
     }
   };
   return (
-    <div className="cursor-pointer">
+    <div className="w-full cursor-pointer">
       <div
         onClick={handleMydayClick}
-        className={cn(!optimisticMyday ? "text-blue-400" : "text-purple-400")}
+        className={cn("flex items-center w-full gap-2")}
         title={!task.myday ? "Add to my day" : "Remove from my day"}
       >
-        {!optimisticMyday ? <SunDim size={18} /> : <CircleX size={18} />}
+        {!optimisticMyday ? (
+          <SunDim className="w-5 h-5 text-blue-400" />
+        ) : (
+          <CircleX className="w-5 h-5 text-purple-400" />
+        )}
+        <span>
+          {!optimisticMyday ? "Mark as my day" : "Remove from my day"}
+        </span>
       </div>
     </div>
   );

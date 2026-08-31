@@ -1,13 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { List } from "lucide-react";
+import { List, MoreVertical } from "lucide-react";
 
 import UpdateList from "@/components/update-list";
 import DeleteList from "@/components/delete-list";
 import { ListCardProps } from "@/types";
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/hooks/useSidebar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 const ListCard = ({ list, isChecked }: ListCardProps) => {
   const sidebar = useSidebar();
@@ -15,10 +21,10 @@ const ListCard = ({ list, isChecked }: ListCardProps) => {
     <div
       key={list.id}
       className={cn(
-        "group border rounded-md px-2 py-2 flex items-center w-full",
+        "group border rounded-2xl px-2 py-2 flex items-center w-full",
         list.color
           ? ""
-          : "bg-gray-400/20 hover:bg-gray-400/10 transition-colors"
+          : "bg-gray-400/20 hover:bg-gray-400/10 transition-colors",
       )}
       style={{ background: list.color }}
     >
@@ -26,7 +32,7 @@ const ListCard = ({ list, isChecked }: ListCardProps) => {
         href={`/list/${list.id}`}
         className={cn(
           "flex items-center gap-1 w-full",
-          list.color === "#ffffff" && "text-black"
+          list.color === "#ffffff" && "text-black",
         )}
         onClick={sidebar.onClose}
       >
@@ -34,16 +40,11 @@ const ListCard = ({ list, isChecked }: ListCardProps) => {
         <p
           className={cn(
             list.color === "#ffffff" && "text-black",
-            "w-32 whitespace-nowrap overflow-x-scroll"
+            "w-32 whitespace-nowrap overflow-x-scroll",
           )}
         >
           {list.name}
         </p>
-        {list._count.tasks > 0 && (
-          <p className={cn("counter_badge", list.color && "border")}>
-            {list._count.tasks}
-          </p>
-        )}
       </Link>
       {!isChecked && (
         <div className="flex gap-2 sm:opacity-0 sm:group-hover:opacity-100">

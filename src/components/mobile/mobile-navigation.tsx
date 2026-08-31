@@ -20,7 +20,7 @@ const MobileNavigation = ({ counts }: MoileNavigationProps) => {
             href={link.href}
             className={cn(
               "relative flex items-center justify-between hover:bg-gray-400/20 transition-all px-2 py-2 rounded-md",
-              path === link.href && "bg-gray-400/20  border-[1px]"
+              path === link.href && "bg-gray-400/20  border-[1px]",
             )}
             style={{ borderColor: path === link.href ? `${link.color}` : "" }}
           >
@@ -31,13 +31,17 @@ const MobileNavigation = ({ counts }: MoileNavigationProps) => {
             {link.href === path && (
               <div
                 className={cn(
-                  "absolute bottom-0 left-1/4 w-[18px] h-1 rounded-tr-sm rounded-tl-sm overflow-x-hidden"
+                  "absolute bottom-0 left-1/4 w-[18px] h-1 rounded-tr-sm rounded-tl-sm overflow-x-hidden",
                 )}
                 style={{ backgroundColor: `${link.color}` }}
               />
             )}
             <div className="absolute -top-2 -right-2">
-              <Counter counts={counts} title={link.title} />
+              <Counter
+                counts={counts}
+                title={link.title}
+                className="bg-background w-5 h-5 flex items-center justify-center text-xs rounded-full border"
+              />
             </div>
           </Link>
         ))}

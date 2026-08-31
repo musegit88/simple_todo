@@ -48,7 +48,7 @@ const DeleteTasks = () => {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          className="text-xs sm:text-base bg-destructive text-destructive-foreground hover:bg-destructive/90 w-fit px-2 py-1 rounded-sm flex items-center gap-1 cursor-pointer"
+          className="text-xs sm:text-base bg-destructive text-destructive-foreground hover:bg-destructive/90 w-fit px-2 py-0.5 rounded-sm flex items-center gap-1 cursor-pointer"
           size="sm"
         >
           <Trash2 size={18} />

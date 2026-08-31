@@ -23,16 +23,10 @@ const UpdateList = ({ list }: UpdateListProps) => {
   return (
     <div className="flex justify-end gap-2 cursor-pointer">
       <Dialog>
-        <DialogTrigger
-          asChild
-          className={cn("p-1", list.color && "bg-gray-400 rounded-md")}
-        >
-          <Edit
-            className={cn(
-              "w-6 h-6 sm:w-7 sm:h-7",
-              list.color ? "text-emerald-800" : "text-emerald-400"
-            )}
-          />
+        <DialogTrigger asChild>
+          <div className="flex items-center gap-2 bg-background/20 hover:bg-background/10 transition-colors rounded-md px-1 py-0.5">
+            <Edit className="text-emerald-400 w-4 h-4" />
+          </div>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>

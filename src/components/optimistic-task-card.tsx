@@ -8,7 +8,7 @@ import {
   startOfToday,
   startOfYesterday,
 } from "date-fns";
-import { Calendar, Sun } from "lucide-react";
+import { Calendar, GripVertical, Sun } from "lucide-react";
 
 type OptimisticTaskCardProps = {
   optimisticTask: {
@@ -25,10 +25,10 @@ type OptimisticTaskCardProps = {
 const OptimisticTaskCard = ({ optimisticTask }: OptimisticTaskCardProps) => {
   return (
     <div className="w-full">
-      <div className="group bg-gray-400/20 rounded-md flex w-full overflow-hidden">
+      <div className="group border rounded-2xl flex w-full overflow-hidden hover:shadow-lg duration-300 transition-all">
         {/* checkbox */}
         <div className="px-1 flex items-center bg-blue-500">
-          <Checkbox className="rounded-full" />
+          <GripVertical />
         </div>
         {/* end checkbox */}
         <div className="p-2 flex gap-2 w-full">

@@ -18,7 +18,7 @@ export const addKey = (path: string, taskId: string) => {
 
 export const removeKeyFromUrlQuery = (
   searchParams: ReadonlyURLSearchParams,
-  open?: boolean
+  open?: boolean,
 ) => {
   if (!open) {
     const currentUrl = qs.parse(searchParams.toString());
@@ -39,7 +39,7 @@ export const handleListsIds = (
   checked: boolean | string,
   listId: string,
   listsIds: string[],
-  setListIds: Dispatch<SetStateAction<string[]>>
+  setListIds: Dispatch<SetStateAction<string[]>>,
 ) => {
   if (checked) {
     setListIds((current: string[]) => [...current, listId]);
@@ -55,7 +55,7 @@ export const handleTaskIds = (
   checked: boolean | string,
   taskId: string,
   setTaskIds: Dispatch<SetStateAction<string[]>>,
-  taskIds: string[]
+  taskIds: string[],
 ) => {
   if (checked) {
     setTaskIds((current) => [...current, taskId]);

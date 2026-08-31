@@ -148,7 +148,10 @@ const TaskForm = ({ user, lists }: TaskFormProps) => {
                                         value={list.id}
                                         className="w-48 overflow-x-scroll"
                                       >
-                                        {list.name}
+                                        <span className="mr-2">
+                                          {list.icon}
+                                        </span>
+                                        <span>{list.name}</span>
                                       </SelectItem>
                                     ))}
                                   </SelectGroup>
@@ -180,6 +183,7 @@ const TaskForm = ({ user, lists }: TaskFormProps) => {
                       type="submit"
                       variant="secondary"
                       disabled={!form.watch("name")}
+                      className="rounded-2xl"
                     >
                       <ArrowUp size={18} />
                     </Button>

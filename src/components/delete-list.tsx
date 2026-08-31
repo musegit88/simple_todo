@@ -35,16 +35,10 @@ const DeleteList = ({ listId, listName, listColor }: DeleteListProps) => {
   return (
     <>
       <AlertDialog>
-        <AlertDialogTrigger
-          className={cn("p-1", listColor && "bg-gray-400 rounded-md")}
-          title="Delete list"
-        >
-          <Trash2
-            className={cn(
-              "w-4 h-4 sm:w-5 sm:h-5",
-              listColor ? "text-red-900" : "text-red-500"
-            )}
-          />
+        <AlertDialogTrigger title="Delete list">
+          <div className="flex items-center gap-2 bg-background/20 hover:bg-background/10 transition-colors rounded-md px-1 py-0.5">
+            <Trash2 className="text-red-500 w-4 h-4" />
+          </div>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

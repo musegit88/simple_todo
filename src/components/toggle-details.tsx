@@ -41,11 +41,11 @@ const ToggleDetails = ({ task }: ToggleDetailsProps) => {
         <Dialog onOpenChange={(open) => removeQuery(open)}>
           <DialogTrigger>
             <div
-              className="flex items-center hover:cursor-pointer text-emerald-400"
+              className="flex items-center hover:cursor-pointer"
               onClick={handleClick}
               title="Task details"
             >
-              <Inspect size={18} />
+              <Inspect className="w-5 h-5 text-emerald-400" />
             </div>
           </DialogTrigger>
           <Details show={show} setShow={setShow} task={task} />
@@ -54,7 +54,7 @@ const ToggleDetails = ({ task }: ToggleDetailsProps) => {
       <div className="flex items-center md:hidden">
         <Drawer>
           <DrawerTrigger className="text-emerald-400" onClick={handleClick}>
-            <Pen className="w-4 h-4" />
+            <Inspect className="w-4 h-4" />
           </DrawerTrigger>
           <DrawerContent>
             <DrawerTitle className="hidden"></DrawerTitle>

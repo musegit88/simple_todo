@@ -14,9 +14,9 @@ const MobileLists = ({ lists, userId }: MobileListProps) => {
   const [listIds, setListIds] = useState<string[]>([]);
 
   return (
-    <div className="md:hidden w-full h-72 overflow-hidden">
-      <div className="flex flex-col gap-4 h-full">
-        <div className="flex flex-col gap-2">
+    <div className="md:hidden w-full h-full min-h-0 overflow-hidden">
+      <div className="flex flex-col gap-4 h-full min-h-0">
+        <div className="flex flex-col gap-2 flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-x-2">
               {lists.length > 1 && (
@@ -43,20 +43,22 @@ const MobileLists = ({ lists, userId }: MobileListProps) => {
             </>
           )}
         </div>
-        <div className="flex flex-col space-y-4 overflow-y-auto">
-          {lists.map((list) => (
-            <div key={list.id} className="flex items-center gap-2 ">
-              {lists.length > 1 && (
-                <Checkbox
-                  checked={listIds.includes(list.id)}
-                  onCheckedChange={(checked) =>
-                    handleListsIds(checked, list.id, listIds, setListIds)
-                  }
-                />
-              )}
-              <ListCard list={list} isChecked={listIds.includes(list.id)} />
-            </div>
-          ))}
+        <div className="flex-1 min-h-0 overflow-y-auto pr-1 pb-4">
+          <div className="flex flex-col space-y-4 pb-2">
+            {lists.map((list) => (
+              <div key={list.id} className="flex items-center gap-2 ">
+                {lists.length > 1 && (
+                  <Checkbox
+                    checked={listIds.includes(list.id)}
+                    onCheckedChange={(checked) =>
+                      handleListsIds(checked, list.id, listIds, setListIds)
+                    }
+                  />
+                )}
+                <ListCard list={list} isChecked={listIds.includes(list.id)} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
