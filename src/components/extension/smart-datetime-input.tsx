@@ -8,7 +8,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Modifiers } from "react-day-picker";
-import { Calendar, CalendarProps } from "@/components/ui/calendar";
+import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -487,12 +487,9 @@ const NaturalLanguageInput = React.forwardRef<
 
 NaturalLanguageInput.displayName = "NaturalLanguageInput";
 
-type DateTimeLocalInputProps = {} & CalendarProps;
+type DateTimeLocalInputProps = {};
 
-const DateTimeLocalInput = ({
-  className,
-  ...props
-}: DateTimeLocalInputProps) => {
+const DateTimeLocalInput = ({ ...props }: DateTimeLocalInputProps) => {
   const { value, onValueChange, Time } = useSmartDateInput();
 
   const formateSelectedDate = React.useCallback(
@@ -530,15 +527,15 @@ const DateTimeLocalInput = ({
           <span className="sr-only">calender</span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" sideOffset={8}>
+      <PopoverContent className="w-auto p-0 rounded-2xl" sideOffset={8}>
         <div className="flex gap-1">
           <Calendar
             {...props}
             id={"calendar"}
-            className={cn("peer flex justify-end", inputBase, className)}
+            className={cn("peer flex justify-end", inputBase)}
             mode="single"
             selected={value as any}
-            onSelect={() => formateSelectedDate}
+            onSelect={formateSelectedDate as any}
           />
           <TimePicker />
         </div>
