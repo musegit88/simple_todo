@@ -8,7 +8,7 @@ const LandingPage = async () => {
   const session = await auth();
   const user = session?.user as UserProps;
   if (user) {
-    redirect("/home");
+    redirect("/tasks");
   }
   return <div>{!user && <Landing />}</div>;
 };
