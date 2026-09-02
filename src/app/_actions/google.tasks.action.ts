@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma-client";
 import { taskUpdateFormSchema } from "@/validator/task-update-schema";
 import { endOfToday } from "date-fns";
 import { google } from "googleapis";
+import { GaxiosError } from "gaxios";
 import { z } from "zod";
 
 export const getOAuthClient = async (userId: string) => {
@@ -28,7 +29,7 @@ export const getOAuthClient = async (userId: string) => {
   const client = new google.auth.OAuth2(
     process.env.AUTH_GOOGLE_ID,
     process.env.AUTH_GOOGLE_SECRET,
-    process.env.AUTH_GOOGLE_REDIRECT_URI
+    process.env.AUTH_GOOGLE_REDIRECT_URI,
   );
   client.setCredentials({ access_token: token?.accounts[0].access_token });
   return client;
@@ -38,7 +39,7 @@ export const createGoogleTask = async (
   userId: string,
   googleTaskIntegration: boolean,
   name: string,
-  duedate: Date
+  duedate: Date,
 ) => {
   const oAuthClient = await getOAuthClient(userId);
   if (!googleTaskIntegration) {
@@ -52,12 +53,11 @@ export const createGoogleTask = async (
       due: duedate ? duedate.toISOString() : endOfToday().toISOString(),
     },
   });
-  console.log(create);
   return create.data;
 };
 
 export const updateGoogleTask = async (
-  values: z.infer<typeof taskUpdateFormSchema>
+  values: z.infer<typeof taskUpdateFormSchema>,
 ) => {
   const { name, taskId, userId, date, description, googleTaskId } = values;
   const oAuthClient = await getOAuthClient(userId);
@@ -76,7 +76,7 @@ export const updateGoogleTask = async (
 
 export const deleteGoogleTask = async (
   userId: string,
-  googleTaskId: string
+  googleTaskId: string,
 ) => {
   const oAuthClient = await getOAuthClient(userId);
 
@@ -89,12 +89,12 @@ export const deleteGoogleTask = async (
 
 export const markGoogleTaskCompleted = async (
   userId: string,
-  googleTaskId: string
+  googleTaskId: string,
 ) => {
   const oAuthClient = await getOAuthClient(userId);
-  const googleTaskCompleted = await google
-    .tasks({ version: "v1" })
-    .tasks.patch({
+  const isTaskAvailable = await checkIfTaskAvailable(googleTaskId, userId);
+  if (isTaskAvailable) {
+    await google.tasks({ version: "v1" }).tasks.patch({
       auth: oAuthClient,
       tasklist: "@default",
       task: googleTaskId,
@@ -103,22 +103,26 @@ export const markGoogleTaskCompleted = async (
         id: googleTaskId,
       },
     });
+  }
 };
 
 export const unmarkGoogleTaskCompleted = async (
   userId: string,
-  googleTaskId: string
+  googleTaskId: string,
 ) => {
   const oAuthClient = await getOAuthClient(userId);
-  await google.tasks({ version: "v1" }).tasks.patch({
-    auth: oAuthClient,
-    tasklist: "@default",
-    task: googleTaskId,
-    requestBody: {
-      status: "normal",
-      id: googleTaskId,
-    },
-  });
+  const isTaskAvailable = await checkIfTaskAvailable(googleTaskId, userId);
+  if (isTaskAvailable) {
+    await google.tasks({ version: "v1" }).tasks.patch({
+      auth: oAuthClient,
+      tasklist: "@default",
+      task: googleTaskId,
+      requestBody: {
+        status: "normal",
+        id: googleTaskId,
+      },
+    });
+  }
 };
 
 export const enableGoogleIntegration = async (userId: string) => {
@@ -141,4 +145,31 @@ export const disableGoogleIntegration = async (userId: string) => {
       googleTaskIntegration: false,
     },
   });
+};
+
+const checkIfTaskAvailable = async (googleTaskId: string, userId: string) => {
+  const oAuthClient = await getOAuthClient(userId);
+
+  try {
+    const response = await google.tasks({ version: "v1" }).tasks.get({
+      auth: oAuthClient,
+      tasklist: "@default",
+      task: googleTaskId,
+    });
+
+    return true;
+  } catch (error: unknown) {
+    if (error instanceof GaxiosError) {
+      if (error.status === 404 || error.response?.status === 404) {
+        return false;
+      } else {
+        console.error("Google API Error:", error.message);
+        throw error;
+      }
+    } else {
+      // Handle standard JS errors or other unexpected throws
+      console.error("Unexpected error:", error);
+      throw error;
+    }
+  }
 };
