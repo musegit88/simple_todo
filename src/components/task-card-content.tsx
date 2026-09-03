@@ -45,7 +45,7 @@ const TaskCardContent = ({ characters, task }: TaskCardContentProps) => {
       )}
 
       {task.duedate > endOfToday() && task.duedate > endOfTomorrow() && (
-        <div className="bg-green-400/20 w-fit flex items-center ml-4 px-2 py-1 rounded-2xl whitespace-nowrap">
+        <div className="bg-green-400/20 w-fit flex items-center sm:ml-4 px-2 py-1 rounded-2xl whitespace-nowrap">
           <Calendar size={12} />
           <p className="text-xs text-green-400 ml-1">
             {format(task.duedate, "E, MMM d")}
@@ -53,19 +53,19 @@ const TaskCardContent = ({ characters, task }: TaskCardContentProps) => {
         </div>
       )}
       {task.duedate < startOfToday() && task.duedate >= startOfYesterday() && (
-        <div className="bg-orange-500/20 w-fit flex items-center ml-4 px-2 py-1 rounded-2xl whitespace-nowrap">
+        <div className="bg-orange-500/20 w-fit flex items-center sm:ml-4 px-2 py-1 rounded-2xl whitespace-nowrap">
           <Calendar size={12} />
           <p className="text-xs text-orange-500 ml-1">Yesterday</p>
         </div>
       )}
       {task.duedate >= startOfToday() && task.duedate <= endOfToday() && (
-        <div className="bg-blue-400/20 w-fit flex items-center ml-4 px-2 py-1 rounded-2xl whitespace-nowrap">
+        <div className="bg-blue-400/20 w-fit flex items-center sm:ml-4 px-2 py-1 rounded-2xl whitespace-nowrap">
           <Sun size={12} />
           <p className="text-xs text-blue-400 ml-1">Today</p>
         </div>
       )}
       {task.duedate > endOfToday() && task.duedate < endOfTomorrow() && (
-        <div className="bg-lime-400/20 w-fit flex items-center ml-4 px-2 py-1 rounded-2xl whitespace-nowrap">
+        <div className="bg-lime-400/20 w-fit flex items-center sm:ml-4 px-2 py-1 rounded-2xl whitespace-nowrap">
           <Calendar size={12} />
           <p className="text-xs text-lime-900 dark:text-lime-400 ml-1">
             Tomorrow
