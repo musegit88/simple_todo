@@ -29,7 +29,12 @@ const HomePage = async () => {
             <ActionButtons />
           </div>
         )}
-        <MyTasks data={tasks} isCompleted={isCompleted} lists={lists} />
+        <MyTasks
+          data={tasks}
+          isCompleted={isCompleted}
+          lists={lists}
+          scope="position"
+        />
       </div>
       <div className="flex-1 w-full">
         {completedTasks.length > 0 && (

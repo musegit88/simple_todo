@@ -23,7 +23,7 @@ const ImportantPage = async () => {
           <ActionButtons />
         </div>
       )}
-      <MyTasks data={importants} lists={lists} />
+      <MyTasks data={importants} lists={lists} scope="importantPosition" />
     </div>
   );
 };

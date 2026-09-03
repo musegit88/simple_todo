@@ -23,7 +23,7 @@ const MyDayPage = async () => {
           <ActionButtons />
         </div>
       )}
-      <MyTasks data={myDay} lists={lists} />
+      <MyTasks data={myDay} lists={lists} scope="myDayPosition" />
     </div>
   );
 };

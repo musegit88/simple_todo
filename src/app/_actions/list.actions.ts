@@ -1,6 +1,7 @@
 "use server";
 
 import { z } from "zod";
+import { generateKeyBetween } from "fractional-indexing";
 import { prisma } from "@/lib/prisma-client";
 import { createListSchema } from "@/validator/create-list-schema";
 import { updateListSchema } from "@/validator/update-list-schema";
@@ -79,8 +80,15 @@ export const allLists = async (userId: string) => {
 export const addTaskToList = async (
   taskId: string,
   listId: string,
-  userId: string
+  userId: string,
 ) => {
+  const last = await prisma.tasks.findFirst({
+    where: { userId, listId },
+    orderBy: { listPosition: "desc" },
+    select: { listPosition: true },
+  });
+  const newKey = generateKeyBetween(last?.listPosition ?? null, null);
+
   await prisma.tasks.update({
     where: {
       id: taskId,
@@ -88,6 +96,7 @@ export const addTaskToList = async (
     },
     data: {
       listId: listId,
+      listPosition: newKey,
     },
   });
 };
@@ -115,7 +124,7 @@ export const getListById = async (listId: string, userId: string) => {
     include: {
       tasks: {
         orderBy: {
-          createdAt: "desc",
+          listPosition: "asc",
         },
         include: {
           user: true,

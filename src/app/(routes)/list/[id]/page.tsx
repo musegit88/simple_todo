@@ -20,7 +20,7 @@ const ListPage = async ({ params }: { params: Params }) => {
   return (
     <div className="overflow-hidden">
       {singleList?.tasks.length ? (
-        <MyTasks data={singleList.tasks} lists={lists} />
+        <MyTasks data={singleList.tasks} lists={lists} scope="listPosition" />
       ) : (
         <Empty />
       )}
