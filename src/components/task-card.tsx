@@ -48,7 +48,7 @@ const TaskCard = ({
         <div className="flex w-36 shrink-0 items-center justify-end gap-2">
           {!isChecked && (
             <>
-              <div className="flex items-center gap-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+              <div className="flex items-center gap-2 sm:opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                 <SelectList lists={lists} task={task} />
                 <ToggleDetails task={task} />
                 <DeleteTask task={task} />

@@ -43,28 +43,9 @@ const TaskCardContent = ({ characters, task }: TaskCardContentProps) => {
           </p>
         </div>
       )}
-      {/* {path !== "/search" ? (
-        <div className="w-32 sm:w-full">
-          <p
-            className={cn(
-              "whitespace-nowrap overflow-x-scroll text-xs sm:text-base",
-              task.completed === true && "line-through"
-            )}
-          >
-            {task.name}
-          </p>
-        </div>
-      ) : (
-        <Highlighter
-          highlightClassName="bg-transparent text-green-400 font-bold"
-          searchWords={[characters!]}
-          autoEscape={true}
-          textToHighlight={task.name}
-        />
-      )} */}
 
       {task.duedate > endOfToday() && task.duedate > endOfTomorrow() && (
-        <div className="bg-green-400/20 w-fit flex items-center ml-4 px-2 py-1 rounded-2xl">
+        <div className="bg-green-400/20 w-fit flex items-center ml-4 px-2 py-1 rounded-2xl whitespace-nowrap">
           <Calendar size={12} />
           <p className="text-xs text-green-400 ml-1">
             {format(task.duedate, "E, MMM d")}
@@ -72,19 +53,19 @@ const TaskCardContent = ({ characters, task }: TaskCardContentProps) => {
         </div>
       )}
       {task.duedate < startOfToday() && task.duedate >= startOfYesterday() && (
-        <div className="bg-orange-500/20 w-fit flex items-center ml-4 px-2 py-1 rounded-2xl">
+        <div className="bg-orange-500/20 w-fit flex items-center ml-4 px-2 py-1 rounded-2xl whitespace-nowrap">
           <Calendar size={12} />
           <p className="text-xs text-orange-500 ml-1">Yesterday</p>
         </div>
       )}
       {task.duedate >= startOfToday() && task.duedate <= endOfToday() && (
-        <div className="bg-blue-400/20 w-fit flex items-center ml-4 px-2 py-1 rounded-2xl">
+        <div className="bg-blue-400/20 w-fit flex items-center ml-4 px-2 py-1 rounded-2xl whitespace-nowrap">
           <Sun size={12} />
           <p className="text-xs text-blue-400 ml-1">Today</p>
         </div>
       )}
       {task.duedate > endOfToday() && task.duedate < endOfTomorrow() && (
-        <div className="bg-lime-400/20 w-fit flex items-center ml-4 px-2 py-1 rounded-2xl">
+        <div className="bg-lime-400/20 w-fit flex items-center ml-4 px-2 py-1 rounded-2xl whitespace-nowrap">
           <Calendar size={12} />
           <p className="text-xs text-lime-900 dark:text-lime-400 ml-1">
             Tomorrow
@@ -92,9 +73,9 @@ const TaskCardContent = ({ characters, task }: TaskCardContentProps) => {
         </div>
       )}
       {task.duedate < startOfYesterday() && (
-        <div className="bg-red-500/20 w-fit flex items-center ml-4 px-2 py-1 rounded-2xl">
+        <div className="bg-red-500/20 w-fit flex items-center sm:ml-4 px-2 py-1 rounded-2xl whitespace-nowrap">
           <Calendar size={12} />
-          <p className="text-xs text-red-500 ml-1">
+          <p className="text-[10px] sm:text-xs text-red-500 ml-1">
             {differenceInCalendarDays(new Date(), task.duedate)} days ago
           </p>
         </div>
