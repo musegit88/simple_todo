@@ -3,11 +3,13 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { endOfToday } from "date-fns";
+import { generateKeyBetween } from "fractional-indexing";
 
 import { prisma } from "@/lib/prisma-client";
 import { taskFormSchema } from "@/validator/task-form-schema";
 import { taskUpdateFormSchema } from "@/validator/task-update-schema";
 import { getListNameById } from "./list.actions";
+import { PositionScope } from "@/types";
 
 const normalizeListId = (listId?: string | null) => {
   const trimmed = listId?.trim();
@@ -35,6 +37,14 @@ export const createTask = async (values: z.infer<typeof taskFormSchema>) => {
     }
   }
 
+  // append every new task to the end of the "Tasks" order
+  const lastPosition = await prisma.tasks.findFirst({
+    where: { userId },
+    orderBy: { position: "desc" },
+    select: { position: true },
+  });
+  const newPosition = generateKeyBetween(lastPosition?.position, null);
+
   if (path === "/my-day") {
     await prisma.tasks.create({
       data: {
@@ -42,6 +52,8 @@ export const createTask = async (values: z.infer<typeof taskFormSchema>) => {
         duedate: endOfToday(),
         myday: true,
         userId,
+        position: newPosition,
+        myDayPosition: newPosition,
         ...(safeListId ? { listId: safeListId } : {}),
       },
     });
@@ -53,6 +65,8 @@ export const createTask = async (values: z.infer<typeof taskFormSchema>) => {
         duedate: date === undefined ? new Date() : date,
         important: true,
         userId,
+        position: newPosition,
+        importantPosition: newPosition,
         ...(safeListId ? { listId: safeListId } : {}),
       },
     });
@@ -65,6 +79,7 @@ export const createTask = async (values: z.infer<typeof taskFormSchema>) => {
         duedate: date === undefined ? endOfToday() : date,
         ...(safeListId ? { listId: safeListId } : {}),
         userId,
+        position: newPosition,
       },
     });
     return { message: `Task created successfully in ${listName?.name}` };
@@ -74,6 +89,7 @@ export const createTask = async (values: z.infer<typeof taskFormSchema>) => {
         name,
         duedate: date === undefined ? endOfToday() : date,
         userId,
+        position: newPosition,
         ...(safeListId ? { listId: safeListId } : {}),
         googleTaskId,
       },
@@ -90,7 +106,7 @@ export const getTasks = async (userId: string) => {
       completed: false,
     },
     orderBy: {
-      createdAt: "desc",
+      position: "asc",
     },
   });
   return tasks;
@@ -175,7 +191,7 @@ export const getMyDay = async (userId: string) => {
       myday: true,
     },
     orderBy: {
-      createdAt: "desc",
+      position: "asc",
     },
   });
   return myDay;
@@ -183,6 +199,14 @@ export const getMyDay = async (userId: string) => {
 
 // Add to my day
 export const addtoMyDay = async (taskId: string, userId: string) => {
+  // appened via fractional key
+  const last = await prisma.tasks.findFirst({
+    where: { userId },
+    orderBy: { myDayPosition: "desc" },
+    select: { myDayPosition: true },
+  });
+  const newKey = generateKeyBetween(last?.myDayPosition ?? null, null);
+
   await prisma.tasks.update({
     where: {
       userId: userId,
@@ -190,6 +214,7 @@ export const addtoMyDay = async (taskId: string, userId: string) => {
     },
     data: {
       myday: true,
+      myDayPosition: newKey,
     },
   });
   revalidatePath("/my-day");
@@ -211,6 +236,13 @@ export const removeMyDay = async (taskId: string, userId: string) => {
 
 // Mark as important
 export const markAsImportant = async (taskId: string, userId: string) => {
+  // appened via fractional key
+  const last = await prisma.tasks.findFirst({
+    where: { userId, important: true },
+    orderBy: { importantPosition: "desc" },
+    select: { importantPosition: true },
+  });
+  const newKey = generateKeyBetween(last?.importantPosition ?? null, null);
   await prisma.tasks.update({
     where: {
       id: taskId,
@@ -218,6 +250,7 @@ export const markAsImportant = async (taskId: string, userId: string) => {
     },
     data: {
       important: true,
+      importantPosition: newKey,
     },
   });
   revalidatePath("/important");
@@ -245,7 +278,7 @@ export const getImportants = async (userId: string) => {
       important: true,
     },
     orderBy: {
-      createdAt: "desc",
+      importantPosition: "asc",
     },
   });
   return importants;
@@ -374,4 +407,26 @@ export const getTaskNamesById = async (taskIds: string[]) => {
     },
   });
   return tasks.map((task) => task.name);
+};
+
+// drag-and-drop reordering (fractional indexing)
+
+// Moves ONE task by computing a key that sits between its new neighbors.
+// Only this single row is written — no matter how large the list is.
+// Pass the *current* keys (from client state) of the tasks immediately
+// before/after the drop position; null if dropped at the very start/end.
+
+export const moveTask = async (
+  taskId: string,
+  userId: string,
+  scope: PositionScope,
+  beforeKey: string | null,
+  afterKey: string | null,
+) => {
+  const newKey = generateKeyBetween(beforeKey, afterKey);
+  await prisma.tasks.update({
+    where: { id: taskId, userId },
+    data: { [scope]: newKey },
+  });
+  return newKey;
 };

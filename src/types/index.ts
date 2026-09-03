@@ -1,5 +1,8 @@
-import { List, Tasks, User } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
+import { DraggableAttributes } from "@dnd-kit/core";
+import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
+
+import { List, Tasks } from "@prisma/client";
 
 export type AddToListProps = {
   lists?: ListType[];
@@ -53,6 +56,11 @@ export type DetailsProps = {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
   task: Tasks;
+};
+
+export type DragHandleProps = {
+  attributes: DraggableAttributes;
+  listeners: SyntheticListenerMap | undefined;
 };
 
 export type EmptyProps = {
@@ -141,6 +149,7 @@ export type MyTasksProps = {
   lists?: ListType[];
   isCompleted?: boolean;
   characters?: string;
+  scope?: PositionScope;
 };
 
 export type NavbarProps = {
@@ -154,6 +163,12 @@ export type NavbarProps = {
   lists: ListType[];
   user: UserProps;
 };
+
+export type PositionScope =
+  | "position"
+  | "myDayPosition"
+  | "importantPosition"
+  | "listPosition";
 
 export type serachbarProps = {
   show?: boolean;
@@ -193,6 +208,7 @@ export type TaskProps = {
   lists?: ListType[];
   characters?: string;
   isChecked: boolean;
+  dragHandleProps?: DragHandleProps;
 };
 
 export type ToggleCompleteProps = {

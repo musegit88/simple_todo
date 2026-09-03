@@ -18,17 +18,28 @@ import {
 } from "@/components/ui/dropdown-menu";
 import ToggleDetails from "./toggle-details";
 
-const TaskCard = ({ task, characters, lists, isChecked }: TaskProps) => {
+const TaskCard = ({
+  task,
+  characters,
+  lists,
+  isChecked,
+  dragHandleProps,
+}: TaskProps) => {
   return (
-    // <div className="w-full">
     <div className="group border rounded-2xl flex w-full overflow-hidden hover:shadow-lg duration-300 transition-all">
       <div
         className={cn(
           "px-1 flex items-center",
+          dragHandleProps && "cursor-grab active:cursor-grabbing",
           task.completed === true ? "bg-green-500" : "bg-blue-500",
         )}
+        style={{ touchAction: "none" }}
+        {...dragHandleProps?.attributes}
+        {...dragHandleProps?.listeners}
       >
-        <GripVertical />
+        <GripVertical
+          className={cn(!dragHandleProps && "text-muted-foreground")}
+        />
       </div>
       <div className="p-2 flex gap-2 w-full min-w-0">
         <div className="flex-1 min-w-0 overflow-hidden">
@@ -67,7 +78,6 @@ const TaskCard = ({ task, characters, lists, isChecked }: TaskProps) => {
         </div>
       </div>
     </div>
-    // </div>
   );
 };
 
