@@ -55,7 +55,7 @@ const ToggleComplete = ({ task }: ToggleCompleteProps) => {
             optimisticCompleted ? "text-green-500" : "text-blue-500",
           )}
         />
-        <span>Completed</span>
+        <span>{completed ? "Mark uncompleted" : "Mark completed"}</span>
       </div>
     </div>
   );

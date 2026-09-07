@@ -54,7 +54,7 @@ const ToggleImportant = ({ task }: ToggleImportantProps) => {
               : "text-yellow-400",
           )}
         />
-        <span>Important</span>
+        <span>{!important ? "Mark imporatnt " : " Mark unimportant"}</span>
       </div>
     </div>
   );
