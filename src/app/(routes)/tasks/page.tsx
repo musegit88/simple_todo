@@ -9,7 +9,7 @@ import { ListType, UserProps } from "@/types";
 import { getCompletedTasks, getTasks } from "../../_actions/tasks.action";
 import { allLists } from "../../_actions/list.actions";
 
-const HomePage = async () => {
+const TasksPage = async () => {
   const session = await auth();
   const user = session?.user as UserProps;
 
@@ -21,7 +21,7 @@ const HomePage = async () => {
   const isCompleted = completedTasks.length > 0;
 
   return (
-    <div className="flex flex-col gap-4 overflow-hidden">
+    <div className="flex flex-col gap-2 overflow-hidden">
       {tasks.length > 0 && (
         <div className="flex items-center gap-2">
           <TaskSelector tasks={tasks} />
@@ -41,4 +41,4 @@ const HomePage = async () => {
   );
 };
 
-export default HomePage;
+export default TasksPage;
