@@ -13,22 +13,22 @@ import { Button } from "./ui/button";
 
 const ImportantTasks = () => {
   const { taskIds, setTaskIds } = useTaskIds();
-  const [notImportant, setNotImportant] = useState<string[]>([]);
+  const [markedUnImportant, setMarkedUntImportant] = useState<string[]>([]);
   const router = useRouter();
 
   useEffect(() => {
     // To fetch tasks that are not marked as important
     const fetch = async () => {
       const response = await getTasksMarkedUnImportant(taskIds);
-      setNotImportant(response);
+      setMarkedUntImportant(response);
     };
     fetch();
   }, [taskIds]);
 
   const handelClick = async () => {
     try {
-      const importantTasksCount = notImportant.length;
-      await markTasksImportantTasksById(notImportant);
+      const importantTasksCount = markedUnImportant.length;
+      await markTasksImportantTasksById(markedUnImportant);
       router.refresh();
       setTaskIds([]);
       toast.success(`${importantTasksCount} tasks marked important`);
@@ -39,16 +39,13 @@ const ImportantTasks = () => {
   };
   return (
     <Button
-      className="text-xs sm:text-base text-white bg-[#d946ef] hover:bg-[#d946ef]/90 w-fit px-2 py-1 rounded-sm flex items-center gap-1 cursor-pointer disabled:cursor-wait"
+      className="text-xs sm:text-base text-white bg-[#d946ef] hover:bg-[#d946ef]/90 w-fit px-2 py-1 rounded-2xl flex items-center gap-1 cursor-pointer disabled:cursor-wait"
       onClick={handelClick}
-      disabled={notImportant.length === 0}
+      disabled={markedUnImportant.length === 0}
       size="sm"
     >
-      <Star
-        size={18}
-        className="text-yellow-400 fill-yellow-400 transition duration-1000"
-      />
-      {notImportant.length} tasks
+      <Star className="w-4 h-4 text-yellow-400 fill-yellow-400 transition duration-1000" />
+      {markedUnImportant.length} tasks
     </Button>
   );
 };
