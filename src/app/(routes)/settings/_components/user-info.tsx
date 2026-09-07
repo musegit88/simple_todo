@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { UserProps } from "@/types";
 import Image from "next/image";
 import { startTransition, useOptimistic, useState } from "react";
+import PushSubscribeButton from "@/components/push-subscribe-button";
 
 type UserInfoProps = {
   user: UserProps;
@@ -81,6 +82,9 @@ const UserInfo = ({ user }: UserInfoProps) => {
           <p>Google Tasks Integration</p>
         </div>
       </Label>
+      <div>
+        <PushSubscribeButton />
+      </div>
     </div>
   );
 };

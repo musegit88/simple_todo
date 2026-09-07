@@ -11,18 +11,19 @@ datasource db {
 }
 
 model User {
-  id                    String    @id @default(cuid())
+  id                    String             @id @default(cuid())
   name                  String?
-  email                 String    @unique
+  email                 String             @unique
   emailVerified         DateTime?
   image                 String?
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
-  googleTaskIntegration Boolean   @default(false)
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+  googleTaskIntegration Boolean            @default(false)
   List                  List[]
   accounts              Account[]
   sessions              Session[]
   tasks                 Tasks[]
+  pushSubscriptions     PushSubscription[]
 
   @@map("users")
 }
@@ -90,6 +91,8 @@ model Tasks {
   importantPosition String @default("a0") // position in "Important" view
   listPosition      String @default("a0") // position within its List
 
+  notified Boolean @default(false)
+
   @@map("tasks")
 }
 
@@ -103,4 +106,16 @@ model List {
   color     String?
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   tasks     Tasks[]
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }

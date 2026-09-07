@@ -51,4 +51,5 @@ certificates
 /src/components/date-picker.tsx
 /src/app/_actions/google-calendar.ts
 /src/app/api/google-tasks
+/src/app/api/push/test/
 .idea
