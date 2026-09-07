@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { ChevronDown, ChevronRight, List } from "lucide-react";
 
-import { cn, handleListsIds } from "@/lib/utils";
+import { handleListsIds } from "@/lib/utils";
 import CreateList from "@/components/create-list";
 import { Button } from "@/components/ui/button";
 import ListCard from "@/components/list-card";
