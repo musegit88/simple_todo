@@ -15,11 +15,13 @@ import {
 } from "@/components/ui/dialog";
 import { DetailsProps } from "@/types";
 import UpdateTaskForm from "@/components/forms/task-update-form";
+import { useTaskViewDialog } from "@/hooks/useTaskViewDialog";
 
-const Details = ({ show, setShow, task }: DetailsProps) => {
+const Details = ({ task }: DetailsProps) => {
+  const { openTaskId } = useTaskViewDialog();
   return (
     <>
-      {show && (
+      {openTaskId && (
         <DialogContent className="md:max-w-[500px] lg:min-h-min">
           <DialogHeader>
             <DialogTitle>Manage Task</DialogTitle>
@@ -125,7 +127,7 @@ const Details = ({ show, setShow, task }: DetailsProps) => {
               )}
             </div>
           </DialogHeader>
-          <UpdateTaskForm task={task} setShow={setShow} />
+          <UpdateTaskForm task={task} />
         </DialogContent>
       )}
     </>

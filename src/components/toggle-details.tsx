@@ -15,15 +15,16 @@ import {
 } from "@/components/ui/drawer";
 import MobileDetails from "@/components/mobile/mobile-details";
 import { ToggleDetailsProps } from "@/types";
+import { useTaskViewDialog } from "@/hooks/useTaskViewDialog";
 
 const ToggleDetails = ({ task }: ToggleDetailsProps) => {
   const path = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [show, setShow] = useState(false);
+  const { open } = useTaskViewDialog();
 
   const handleClick = () => {
-    setShow(true);
+    open(task.id);
     const newUrl = addKey(path, task.id);
     router.push(newUrl, { scroll: false });
   };
@@ -48,7 +49,7 @@ const ToggleDetails = ({ task }: ToggleDetailsProps) => {
               <Inspect className="w-5 h-5 text-emerald-400" />
             </div>
           </DialogTrigger>
-          <Details show={show} setShow={setShow} task={task} />
+          <Details task={task} />
         </Dialog>
       </div>
       <div className="flex items-center md:hidden">

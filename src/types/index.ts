@@ -53,8 +53,6 @@ export type DeleteTaskProps = {
 };
 
 export type DetailsProps = {
-  show: boolean;
-  setShow: Dispatch<SetStateAction<boolean>>;
   task: Tasks;
 };
 
@@ -286,5 +284,4 @@ export type UserProps = {
 
 export type UpdateTaskFormProps = {
   task: Tasks;
-  setShow: Dispatch<SetStateAction<boolean>>;
 };

@@ -20,8 +20,9 @@ import { UpdateTaskFormProps } from "@/types";
 import { taskUpdateFormSchema } from "@/validator/task-update-schema";
 import { updateTaskById } from "@/app/_actions/tasks.action";
 import { updateGoogleTask } from "@/app/_actions/google.tasks.action";
+import { useTaskViewDialog } from "@/hooks/useTaskViewDialog";
 
-const UpdateTaskForm = ({ task, setShow }: UpdateTaskFormProps) => {
+const UpdateTaskForm = ({ task }: UpdateTaskFormProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const form = useForm<z.infer<typeof taskUpdateFormSchema>>({
@@ -37,6 +38,8 @@ const UpdateTaskForm = ({ task, setShow }: UpdateTaskFormProps) => {
     },
   });
 
+  const { close } = useTaskViewDialog();
+
   const onSubmit = async (values: z.infer<typeof taskUpdateFormSchema>) => {
     if (task.googleTaskId) {
       await updateGoogleTask(values);
@@ -44,7 +47,7 @@ const UpdateTaskForm = ({ task, setShow }: UpdateTaskFormProps) => {
     try {
       const response = await updateTaskById(values);
       toast.success(response.message);
-      setShow(false);
+      close();
       const url = removeKeyFromUrlQuery(searchParams);
       if (url) {
         router.push(url, { scroll: false });
@@ -116,7 +119,7 @@ const UpdateTaskForm = ({ task, setShow }: UpdateTaskFormProps) => {
                     {task.duedate < startOfToday() && (
                       <div
                         className={cn(
-                          "flex items-center justify-end w-full gap-2 text-xs text-red-500"
+                          "flex items-center justify-end w-full gap-2 text-xs text-red-500",
                         )}
                       >
                         <Calendar />
@@ -127,7 +130,7 @@ const UpdateTaskForm = ({ task, setShow }: UpdateTaskFormProps) => {
                       task.duedate >= startOfToday() && (
                         <div
                           className={cn(
-                            "flex items-center justify-end w-full gap-2 text-xs text-blue-500"
+                            "flex items-center justify-end w-full gap-2 text-xs text-blue-500",
                           )}
                         >
                           <Sun />
